@@ -1,7 +1,7 @@
 # Project - Android Gallery App
 Đồ án thực hành nhóm 7 môn lập trình mobile 20_3 HCMUS
 
-** Clone project này trước khi bắt tay vào code **
+**Clone project này trước khi bắt tay vào code**
 
 ## Table of Contents
 - [Features](#features)
