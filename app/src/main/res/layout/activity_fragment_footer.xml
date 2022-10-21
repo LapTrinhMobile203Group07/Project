@@ -3,63 +3,54 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:background="#F2F2F2">
     <LinearLayout
         android:id="@+id/itemPhotos"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_margin="5dp"
         android:orientation="vertical"
         android:gravity="center">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_photo_library_24"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="All Photos"/>
-
+        <Button
+            android:id="@+id/btnPhotos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#F2F2F2" android:textColor="#666666"
+            android:drawableTop="@drawable/ic_baseline_photo_library_24"
+            android:text="All Photos" android:textSize="10sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/itemAlbum"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_margin="5dp"
         android:orientation="vertical"
         android:gravity="center">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_folder_24"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Album"/>
-
+        <Button
+            android:id="@+id/btnAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#F2F2F2" android:textColor="#666666"
+            android:drawableTop="@drawable/ic_baseline_folder_24"
+            android:text="Album" android:textSize="10sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/itemSearch"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_margin="5dp"
         android:orientation="vertical"
         android:gravity="center">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_search_24"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search"/>
-
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#F2F2F2" android:textColor="#666666"
+            android:drawableTop="@drawable/ic_baseline_search_24"
+            android:text="Search" android:textSize="10sp" />
     </LinearLayout>
 
 
