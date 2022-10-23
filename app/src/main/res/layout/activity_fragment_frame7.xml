@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="80dp"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:text="‹"
+            android:paddingLeft="10dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="15dp"
+            android:textColor="#3D5AFE"
+            android:textSize="70sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnEdit"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:text="Edit"
+            android:layout_marginRight="10dp"
+            android:textSize="18sp"
+            android:padding="0dp"
+            android:textColor="#3D5AFE"
+            android:background="@drawable/custom_btnedit"
+            android:textAllCaps="false"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BFBDBD"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </LinearLayout>
+</LinearLayout>
