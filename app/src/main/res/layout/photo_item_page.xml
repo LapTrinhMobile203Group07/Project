@@ -114,71 +114,70 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp">
 
-                <LinearLayout
-                    android:id="@+id/itemShare"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="5dp"
-                    android:orientation="vertical"
-                    android:gravity="center">
+            <LinearLayout
+                android:id="@+id/itemShare"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:gravity="center">
 
-                    <Button
-                        android:id="@+id/button_share"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/share_button" />
+                <Button
+                    android:id="@+id/button_share"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/share_button" />
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/itemFav"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="5dp"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <Button
-                        android:id="@+id/button_fav"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/ic_baseline_favorite_border_24" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/itemPicinfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="5dp"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <Button
-                        android:id="@+id/button_info"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/info_button" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/itemSearch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="5dp"
-                    android:orientation="vertical"
-                    android:gravity="center">
-                    <Button
-                        android:id="@+id/button_delete"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/ic_baseline_delete_outline_24" />
-
-                </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/itemFav"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/button_fav"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/ic_baseline_favorite_border_24" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/itemPicinfo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/button_info"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/info_button" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/itemSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/button_delete"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/ic_baseline_delete_outline_24" />
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
-

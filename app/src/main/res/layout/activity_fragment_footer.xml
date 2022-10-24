@@ -12,7 +12,6 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:gravity="center">
-<<<<<<< HEAD
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,7 +21,6 @@
             android:layout_height="wrap_content"
             android:text="All Photos"/>
 
-=======
         <Button
             android:id="@+id/btnPhotos"
             android:layout_width="match_parent"
@@ -30,7 +28,6 @@
             android:backgroundTint="#F2F2F2" android:textColor="#666666"
             android:drawableTop="@drawable/ic_baseline_photo_library_24"
             android:text="All Photos" android:textSize="10sp" />
->>>>>>> 097eb6e3a863e841bf755a081faf398f6318c59e
     </LinearLayout>
 
     <LinearLayout
