@@ -19,11 +19,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="18dp"
             android:layout_marginTop="10dp"
-
             tools:ignore="SpeakableTextPresentCheck" />
-
-
-
         <TextView
             android:id="@+id/album"
             android:layout_width="match_parent"
@@ -72,14 +68,49 @@
             android:layout_marginStart="302dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
-            android:background="none"
+            android:background="@null"
             android:fontFamily="@font/cabin"
             android:layout_gravity="end"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="2dp"
             android:text="@string/see_all"
             android:textAppearance="@style/my_album"
             android:textColor="@color/blue" />
     </RelativeLayout>
 
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+<FrameLayout
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="900dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <GridView
+            android:id="@+id/GridView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:columnWidth="100dp"
+            android:gravity="center"
+            android:horizontalSpacing="1dp"
+            android:listSelector="#0f0"
+            android:numColumns="10"
+            android:orientation="horizontal"
+            android:scrollbarAlwaysDrawHorizontalTrack="true"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbars="horizontal"
+            android:stretchMode="none"
+            android:rowCount="2"
 
+
+            android:verticalSpacing="1dp"
+            tools:context=".GridXMLActivity">
+
+        </GridView>
+    </LinearLayout>
+
+</FrameLayout>
+
+    </HorizontalScrollView>
 </LinearLayout>

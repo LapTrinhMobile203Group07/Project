@@ -10,5 +10,7 @@
 
     <color name="rectangle_8_color">#EAFCFE</color>
     <color name="blue">#0066FF</color>
+    <color name="grey">#E7E7E7</color>
+
 
 </resources>
