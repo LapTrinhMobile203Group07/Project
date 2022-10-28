@@ -29,7 +29,7 @@
                 android:textColor="#0066ff"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
-                android:background="@drawable/custom_btnedit"
+                android:background="@drawable/custom_button_edit"
                 android:textAllCaps="false"
                 android:text="Select"/>
         </RelativeLayout>

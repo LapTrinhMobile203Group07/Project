@@ -1,68 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:paddingTop="30dp"
     android:orientation="vertical"
-    tools:context=".MainActivity">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-        <TextView
-            android:id="@+id/btnBack"
-            android:layout_width="80dp"
-            android:layout_height="150dp"
-            android:gravity="center"
-            android:text="‹"
-            android:paddingLeft="10dp"
-            android:paddingRight="30dp"
-            android:paddingBottom="15dp"
-            android:textColor="#3D5AFE"
-            android:textSize="70sp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_weight="1">
-            <TextView
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="Location"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:textColor="@color/black" />
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="Time"
-                android:textSize="13sp"
-                android:gravity="center"
-                android:textColor="@color/black"/>
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btnEdit"
-            android:layout_width="80dp"
-            android:layout_height="30dp"
-            android:text="Edit"
-            android:layout_marginRight="10dp"
-            android:textSize="18sp"
-            android:padding="0dp"
-            android:textColor="#3D5AFE"
-            android:background="@drawable/custom_btnedit"
-            android:textAllCaps="false"/>
-    </LinearLayout>
+    android:background="@drawable/custom_dialog_newalbum">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#BFBDBD"/>
+        android:layout_height="wrap_content"
+        android:text="New album"
+        android:gravity="center"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Input the album name."
+        android:textSize="18sp"
+        android:textColor="@color/black"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="Title"
+        android:textSize="22sp"
+        android:layout_margin="15dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:background="@drawable/custom_input_newalbum"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Cancle"
+            android:textAllCaps="false"
+            android:background="@drawable/custom_button_cancle_newalbum"
+            android:textSize="18sp"
+            android:textColor="@color/purple_500"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:background="@drawable/custom_button_save_newalbum"
+            android:textSize="18sp"
+            android:textColor="@color/purple_500"/>
     </LinearLayout>
 </LinearLayout>
