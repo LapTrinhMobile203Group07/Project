@@ -10,12 +10,12 @@ import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 
-public class FragmentFrame5 extends Fragment implements FragmentCallbacks {
+public class FragmentFrame1 extends Fragment implements FragmentCallbacks {
     MainActivity main;
     Context context;
 
-    public static FragmentFrame5 newInstance(){
-        FragmentFrame5 fragment = new FragmentFrame5();
+    public static FragmentFrame1 newInstance(){
+        FragmentFrame1 fragment = new FragmentFrame1();
         return fragment;
     }
 
@@ -33,7 +33,7 @@ public class FragmentFrame5 extends Fragment implements FragmentCallbacks {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        LinearLayout layout_main = (LinearLayout) inflater.inflate(R.layout.activity_fragment_frame5, null);
+        LinearLayout layout_main = (LinearLayout) inflater.inflate(R.layout.activity_fragment_frame1, null);
 
         return layout_main;
     }

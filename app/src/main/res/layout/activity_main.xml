@@ -3,18 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <Button android:id="@+id/btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Open dialog"/>
+
     <FrameLayout
-        android:id="@+id/main_holder_blue"
+        android:id="@+id/mainFrag_holder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"/>
     <FrameLayout
-        android:id="@+id/footer_fragment"
+        android:id="@+id/footFrag_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"/>

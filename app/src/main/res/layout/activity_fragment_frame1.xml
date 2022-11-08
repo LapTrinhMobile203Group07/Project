@@ -20,6 +20,12 @@
             android:layout_marginStart="18dp"
             android:layout_marginTop="10dp"
             tools:ignore="SpeakableTextPresentCheck" />
+        <!--
+            <Button android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Open dialog"/>
+        -->
         <TextView
             android:id="@+id/album"
             android:layout_width="match_parent"
