@@ -14,10 +14,11 @@
         android:gravity="center">
         <Button
             android:id="@+id/btnPhotos"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="#F2F2F2" android:textColor="#666666"
-            android:drawableTop="@drawable/ic_baseline_photo_library_24"
+            android:textColor="#666666"
+            android:drawableTop="@drawable/ic_baseline_photo_library"
             android:text="All Photos" android:textSize="10sp" />
     </LinearLayout>
 
@@ -30,10 +31,11 @@
         android:gravity="center">
         <Button
             android:id="@+id/btnAlbum"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="#F2F2F2" android:textColor="#666666"
-            android:drawableTop="@drawable/ic_baseline_folder_24"
+            android:textColor="#666666"
+            android:drawableTop="@drawable/ic_baseline_folder"
             android:text="Album" android:textSize="10sp" />
     </LinearLayout>
 
@@ -46,10 +48,11 @@
         android:gravity="center">
         <Button
             android:id="@+id/btnSearch"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="#F2F2F2" android:textColor="#666666"
-            android:drawableTop="@drawable/ic_baseline_search_24"
+            android:textColor="#666666"
+            android:drawableTop="@drawable/ic_baseline_search"
             android:text="Search" android:textSize="10sp" />
     </LinearLayout>
 
