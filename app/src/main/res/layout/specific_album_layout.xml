@@ -5,51 +5,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".FragmentFrame5">
+    tools:context=".AllAlbumLayout">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp">
 
             <TextView
-                android:id="@+id/txtTitle"
+                android:id="@+id/f6_txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="My Album"
+                android:text="Album name 7"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
+
             <Button
+                android:id="@+id/btnSelect"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:padding="0dp"
-                android:layout_marginEnd="10dp"
-                android:textSize="11sp"
-                android:textColor="#0066ff"
-                android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/custom_button_edit"
+                android:padding="0dp"
+                android:text="Select"
                 android:textAllCaps="false"
-                android:text="Select"/>
+                android:textColor="#0066ff"
+                android:textSize="11sp" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
 
         <GridView
-            android:id="@+id/gridAlbum"
+            android:id="@+id/f6_gridAlbum"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
-            android:verticalSpacing="5dp" android:horizontalSpacing="5dp"
+            android:layout_weight="1"
+            android:horizontalSpacing="5dp"
+            android:numColumns="3"
             android:stretchMode="spacingWidth"
-            android:numColumns="3"/>
+            android:verticalSpacing="5dp" />
 
     </LinearLayout>
 

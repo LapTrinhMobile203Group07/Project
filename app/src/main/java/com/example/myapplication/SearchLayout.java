@@ -9,12 +9,12 @@ import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 
-public class FragmentFrame2 extends Fragment implements FragmentCallbacks {
+public class SearchLayout extends Fragment implements FragmentCallbacks {
     MainActivity main;
     Context context;
 
-    public static FragmentFrame2 newInstance(){
-        FragmentFrame2 fragment = new FragmentFrame2();
+    public static SearchLayout newInstance(){
+        SearchLayout fragment = new SearchLayout();
         return fragment;
     }
 
@@ -32,7 +32,7 @@ public class FragmentFrame2 extends Fragment implements FragmentCallbacks {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        LinearLayout layout= (LinearLayout) inflater.inflate(R.layout.activity_fragment_frame2, null);
+        LinearLayout layout= (LinearLayout) inflater.inflate(R.layout.search_page_layout, null);
 
         return layout;
     }

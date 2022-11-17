@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import java.util.ArrayList;
-public class GridApdapter extends ArrayAdapter<Item> {
+public class GridApdapter extends ArrayAdapter<ImageItem> {
 
-    public GridApdapter(@NonNull Context context, ArrayList<Item> ItemArrayList) {
+    public GridApdapter(@NonNull Context context, ArrayList<ImageItem> ItemArrayList) {
         super(context, 0, ItemArrayList);
     }
 
@@ -22,10 +22,10 @@ public class GridApdapter extends ArrayAdapter<Item> {
         View listitemView = convertView;
         if (listitemView == null) {
             // Layout Inflater inflates each item to be displayed in GridView.
-            listitemView = LayoutInflater.from(getContext()).inflate(R.layout.albums, parent, false);
+            listitemView = LayoutInflater.from(getContext()).inflate(R.layout.album, parent, false);
         }
 
-        Item Item = getItem(position);
+        ImageItem Item = getItem(position);
         TextView courseTV = listitemView.findViewById(R.id.name);
         ImageView courseIV = listitemView.findViewById(R.id.avatar);
 

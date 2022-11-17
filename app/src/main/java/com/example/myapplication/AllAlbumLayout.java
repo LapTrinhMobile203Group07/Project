@@ -6,16 +6,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 
-public class FragmentFrame5 extends Fragment implements FragmentCallbacks {
+public class AllAlbumLayout extends Fragment implements FragmentCallbacks {
     MainActivity main;
     Context context;
+    Button btnSelect;
 
-    public static FragmentFrame5 newInstance(){
-        FragmentFrame5 fragment = new FragmentFrame5();
+    public static AllAlbumLayout newInstance(){
+        AllAlbumLayout fragment = new AllAlbumLayout();
         return fragment;
     }
 
@@ -33,9 +36,23 @@ public class FragmentFrame5 extends Fragment implements FragmentCallbacks {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        LinearLayout layout_main = (LinearLayout) inflater.inflate(R.layout.activity_fragment_frame5, null);
+        LinearLayout All_Album_layout = (LinearLayout) inflater.inflate(R.layout.all_album_layout, null);
+        assignViewByFindId(All_Album_layout);
 
-        return layout_main;
+
+        btnSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Do something
+            }
+        });
+
+
+        return All_Album_layout;
+    }
+
+    private void assignViewByFindId(LinearLayout layout){
+        btnSelect = (Button) layout.findViewById(R.id.btnSelect);
     }
 
     @Override

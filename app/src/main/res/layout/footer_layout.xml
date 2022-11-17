@@ -19,6 +19,7 @@
             android:layout_height="match_parent"
             android:textColor="#666666"
             android:drawableTop="@drawable/ic_baseline_photo_library"
+            android:drawableTint="#666666"
             android:text="All Photos" android:textSize="10sp" />
     </LinearLayout>
 
@@ -36,6 +37,7 @@
             android:layout_height="match_parent"
             android:textColor="#666666"
             android:drawableTop="@drawable/ic_baseline_folder"
+            android:drawableTint="#666666"
             android:text="Album" android:textSize="10sp" />
     </LinearLayout>
 
@@ -53,6 +55,7 @@
             android:layout_height="match_parent"
             android:textColor="#666666"
             android:drawableTop="@drawable/ic_baseline_search"
+            android:drawableTint="#666666"
             android:text="Search" android:textSize="10sp" />
     </LinearLayout>
 

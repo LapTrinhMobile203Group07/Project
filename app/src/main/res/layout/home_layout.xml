@@ -59,18 +59,16 @@
             android:textAppearance="@style/my_album" />
 
         <Button
-            android:id="@+id/see_all"
+            android:id="@+id/btnSeeAll"
             android:layout_width="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_height="wrap_content"
-            android:layout_marginStart="302dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
-            android:background="@null"
             android:fontFamily="@font/cabin"
-            android:layout_gravity="end"
-            android:layout_marginEnd="2dp"
+            android:layout_marginEnd="20dp"
             android:text="@string/see_all"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:textAppearance="@style/my_album"
             android:textColor="@color/blue" />
     </RelativeLayout>

@@ -1,22 +1,24 @@
 package com.example.myapplication;
 
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 
-public class FragmentFooter extends Fragment implements FragmentCallbacks {
+public class HomeLayout extends Fragment implements FragmentCallbacks {
     MainActivity main;
     Context context;
-    Button btnPhotos, btnAlbums, btnSearch;
+    Button btnGo, btnSeeAll;
 
-    public static FragmentFooter newInstance(){
-        FragmentFooter fragment = new FragmentFooter();
+    public static HomeLayout newInstance(){
+        HomeLayout fragment = new HomeLayout();
         return fragment;
     }
 
@@ -33,38 +35,31 @@ public class FragmentFooter extends Fragment implements FragmentCallbacks {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        LinearLayout home_layout = (LinearLayout) inflater.inflate(R.layout.home_layout, null);
 
-        LinearLayout layout_footer = (LinearLayout) inflater.inflate(R.layout.activity_fragment_footer, null);
+        assignViewByFindId(home_layout);
 
-        assignViewByFindId(layout_footer);
-
-        btnPhotos.setOnClickListener(new View.OnClickListener() {
+        btnGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                main.onMsgFromFragToMain("Footer", "Photos");
+                // Do something
             }
         });
 
-        btnAlbums.setOnClickListener(new View.OnClickListener() {
+        btnSeeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                main.onMsgFromFragToMain("Footer", "Albums");
+                main.onMsgFromFragToMain("Home_Layout", "All_Album_Layout");
             }
         });
 
-        btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                main.onMsgFromFragToMain("Footer", "Search");
-            }
-        });
-        return layout_footer;
+
+        return home_layout;
     }
 
     private void assignViewByFindId(LinearLayout layout){
-        btnPhotos = (Button)  layout.findViewById(R.id.btnPhotos);
-        btnAlbums = (Button) layout.findViewById(R.id.btnAlbum);
-        btnSearch = (Button) layout.findViewById(R.id.btnSearch);
+        btnGo = (Button) layout.findViewById(R.id.btnGo);
+        btnSeeAll = (Button) layout.findViewById(R.id.btnSeeAll);
     }
 
     @Override

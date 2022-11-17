@@ -1,37 +1,22 @@
 package com.example.myapplication;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Button;
-
-import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
-
 
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import java.util.ArrayList;
-
 public class MainActivity extends FragmentActivity implements MainCallbacks {
 
     FragmentTransaction ft;
-    FragmentFooter fragmentFooter;
-    FragmentSearch fragmentSearch;
-    FragmentFrame1 fragmentFrame1;
-    FragmentFrame2 fragmentFrame2;
-    FragmentFrame5 fragmentFrame5;
-    FragmentFrame6 fragmentFrame6;
+    FooterLayout footerLayout;
+    SearchLayout searchLayout;
+
+    
+    HomeLayout homeLayout;
+    AllPhotosLayout allPhotosLayout;
+    AllAlbumLayout allAlbumLayout;
+    SpecificAlbumLayout specificAlbumLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -39,13 +24,13 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
         setContentView(R.layout.activity_main);
 
         ft = getSupportFragmentManager().beginTransaction();
-        fragmentFrame1 = FragmentFrame1.newInstance();
-        ft.replace(R.id.mainFrag_holder, fragmentFrame1);
+        homeLayout = HomeLayout.newInstance();
+        ft.replace(R.id.mainFrag_holder, homeLayout);
         ft.commit();
 
         ft = getSupportFragmentManager().beginTransaction();
-        fragmentFooter = FragmentFooter.newInstance();
-        ft.replace(R.id.footFrag_holder, fragmentFooter);
+        footerLayout = FooterLayout.newInstance();
+        ft.replace(R.id.footFrag_holder, footerLayout);
         ft.commit();
     
     }
@@ -54,26 +39,33 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
     // MainCallback implementation (receiving messages coming from Fragments)
     @Override
     public void onMsgFromFragToMain(String sender, String btn){
-        if (sender.equals("Footer")){
-            if (btn.equals("Photos")){
+        if (sender.equals("Footer_Layout")){
+            if (btn.equals("All_Photo_Layout")){
                 ft = getSupportFragmentManager().beginTransaction();
-                fragmentFrame2 = FragmentFrame2.newInstance();
-                ft.replace(R.id.mainFrag_holder, fragmentFrame2);
+                allPhotosLayout = AllPhotosLayout.newInstance();
+                ft.replace(R.id.mainFrag_holder, allPhotosLayout);
                 ft.commit();
             }
-            else if (btn.equals("Albums")){
+            else if (btn.equals("Home_Layout")){
                 ft = getSupportFragmentManager().beginTransaction();
-                fragmentFrame1 = FragmentFrame1.newInstance();
-                ft.replace(R.id.mainFrag_holder, fragmentFrame1);
+                homeLayout = HomeLayout.newInstance();
+                ft.replace(R.id.mainFrag_holder, homeLayout);
                 ft.commit();
             }
-            else if (btn.equals("Search")){
+            else if (btn.equals("Search_Layout")){
                 ft = getSupportFragmentManager().beginTransaction();
-                fragmentSearch = FragmentSearch.newInstance();
-                ft.replace(R.id.mainFrag_holder, fragmentSearch);
+                searchLayout = SearchLayout.newInstance();
+                ft.replace(R.id.mainFrag_holder, searchLayout);
                 ft.commit();
             }
-
+        }
+        if (sender.equals("Home_Layout")){
+            if (btn.equals("All_Album_Layout")){
+                ft = getSupportFragmentManager().beginTransaction();
+                allAlbumLayout = AllAlbumLayout.newInstance();
+                ft.replace(R.id.mainFrag_holder, allAlbumLayout);
+                ft.commit();
+            }
         }
     }
 
@@ -85,7 +77,7 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragment_frame2);
+        setContentView(R.layout.all_photos_layout);
         coursesGV = findViewById(R.id.GridView);
         ArrayList<Item> courseModelArrayList = new ArrayList<Item>();
 
