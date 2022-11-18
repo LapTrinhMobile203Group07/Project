@@ -43,7 +43,7 @@
             android:textAllCaps="false"
             android:background="@drawable/custom_button_cancle_newalbum"
             android:textSize="18sp"
-            android:textColor="@color/purple_500"/>
+            android:textColor="@color/blue"/>
         <Button
             android:id="@+id/btn_save_dialog"
             android:layout_width="0dp"
@@ -53,6 +53,6 @@
             android:textAllCaps="false"
             android:background="@drawable/custom_button_save_newalbum"
             android:textSize="18sp"
-            android:textColor="@color/purple_500"/>
+            android:textColor="@color/blue"/>
     </LinearLayout>
 </LinearLayout>
