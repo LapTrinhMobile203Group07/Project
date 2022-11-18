@@ -1,13 +1,17 @@
 package com.example.myapplication;
 
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
@@ -37,12 +41,12 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout home_layout = (LinearLayout) inflater.inflate(R.layout.home_layout, null);
 
-        assignViewByFindId(home_layout);
+        assignViewByFindId_HomeLayout(home_layout);
 
         btnGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Do something
+                Opendialog();
             }
         });
 
@@ -52,12 +56,10 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
                 main.onMsgFromFragToMain("Home_Layout", "All_Album_Layout");
             }
         });
-
-
         return home_layout;
     }
 
-    private void assignViewByFindId(LinearLayout layout){
+    private void assignViewByFindId_HomeLayout(LinearLayout layout){
         btnGo = (Button) layout.findViewById(R.id.btnGo);
         btnSeeAll = (Button) layout.findViewById(R.id.btnSeeAll);
     }
@@ -65,5 +67,14 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
     @Override
     public void onMsgFromMainToFragment(String btn) {
 
+    }
+
+    public void Opendialog(){
+        Dialog dialog = new Dialog(this.getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.dialog_home_layout);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
     }
 }

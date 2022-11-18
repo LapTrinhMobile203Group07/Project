@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/btn_cancel_dialog"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -44,6 +45,7 @@
             android:textSize="18sp"
             android:textColor="@color/purple_500"/>
         <Button
+            android:id="@+id/btn_save_dialog"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
