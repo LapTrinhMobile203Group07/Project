@@ -7,6 +7,7 @@ import android.content.Context;
 
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,14 +15,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -33,6 +38,7 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
     Context context;
     GridView gridPhoto;
     Button btnSelect;
+    private static PhotosApdapter adapter;
     //Array Media
     ArrayList<Photos> arrayList = new ArrayList<>();
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
@@ -93,6 +99,7 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
     public void onResume() {
 
         super.onResume();
+        getImages();
 
     }
 
@@ -157,6 +164,7 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
                 dataImage = cur.getString(dataColumn);
                 // Do something with the values.
                 Log.e("ListingImages", " Data path Image=" + dataImage);
+//                arrayList.add(new Photos(dataImage));
                 arrayList.add(new Photos(dataImage));
 //                Log.i("ListingImages", " Data=" + dataVideo);
             } while (cur.moveToNext());
@@ -170,7 +178,6 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
         gridPhoto.setAdapter(adapter);
 
     } //GetImages
-
 
 
 

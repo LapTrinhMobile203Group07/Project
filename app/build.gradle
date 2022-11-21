@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.myapplication"
-        minSdk 21
+        minSdk 28
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -32,7 +32,6 @@ android {
     }
 }
 
-
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.5.1'
@@ -48,6 +47,7 @@ dependencies {
     // For Picasso Library
     implementation 'com.squareup.picasso:picasso:2.8'
 
+    //
 
     // For RecyclerView
     implementation "androidx.recyclerview:recyclerview:1.2.1"

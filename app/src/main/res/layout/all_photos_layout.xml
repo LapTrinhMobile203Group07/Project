@@ -47,12 +47,12 @@
         android:gravity="center"
         android:listSelector="#0f0"
         android:numColumns="4"
-        android:rowCount="2"
+
         android:scrollbarAlwaysDrawHorizontalTrack="true"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:horizontalSpacing="2dp"
-        android:verticalSpacing="2dp"
-        android:src="@drawable/ic_launcher_background">
+        android:horizontalSpacing="0dp"
+        android:verticalSpacing="0dp"
+        >
 
     </GridView>
 
