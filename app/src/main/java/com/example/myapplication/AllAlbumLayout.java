@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
@@ -16,6 +16,22 @@ public class AllAlbumLayout extends Fragment implements FragmentCallbacks {
     MainActivity main;
     Context context;
     Button btnSelect;
+    ListView  gridAlbum;
+    //=============
+    ListView ItemLV;
+
+    ImageItem[] items =
+            {
+                    new ImageItem("Nguyễn Văn A", R.drawable.avatar01),
+                    new ImageItem("Lê Thị B", R.drawable.avatar02),
+                    new ImageItem("Trần Văn C", R.drawable.avatar03),
+                    new ImageItem("Phan Văn C", R.drawable.avatar04),
+                    new ImageItem("Đinh Văn D", R.drawable.avatar05),
+                    new ImageItem("Thái Mai Khánh Vy", R.drawable.avatar06),
+                    new ImageItem("Trần Đức Anh", R.drawable.avatar07),
+            };
+
+    //===============
 
     public static AllAlbumLayout newInstance(){
         AllAlbumLayout fragment = new AllAlbumLayout();
@@ -38,7 +54,10 @@ public class AllAlbumLayout extends Fragment implements FragmentCallbacks {
 
         LinearLayout All_Album_layout = (LinearLayout) inflater.inflate(R.layout.all_album_layout, null);
         assignViewByFindId(All_Album_layout);
-
+        //Tài
+        GridApdapter adapter = new GridApdapter(getContext(), R.layout.custom_item_list, items);
+        ItemLV.setAdapter(adapter);
+        //
 
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +71,10 @@ public class AllAlbumLayout extends Fragment implements FragmentCallbacks {
     }
 
     private void assignViewByFindId(LinearLayout layout){
-        btnSelect = (Button) layout.findViewById(R.id.btnSelect);
+//        gridAlbum = (GridView) layout.findViewById(R.id.gridAlbum);
+        btnSelect = layout.findViewById(R.id.btnSelect);
+        ItemLV =  layout.findViewById(R.id.ListView);
+
     }
 
     @Override

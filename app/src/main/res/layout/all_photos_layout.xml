@@ -50,9 +50,9 @@
         android:rowCount="2"
         android:scrollbarAlwaysDrawHorizontalTrack="true"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:horizontalSpacing="1dp"
-        android:verticalSpacing="1dp"
-        tools:context=".GridXMLActivity">
+        android:horizontalSpacing="2dp"
+        android:verticalSpacing="2dp"
+        android:src="@drawable/ic_launcher_background">
 
     </GridView>
 
