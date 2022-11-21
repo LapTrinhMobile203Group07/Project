@@ -75,6 +75,24 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.dialog_home_layout);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button btn_cancel_dialog = (Button) dialog.findViewById(R.id.btn_cancel_dialog);
+        Button btn_save_dialog = (Button) dialog.findViewById(R.id.btn_save_dialog);
+
+        btn_cancel_dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btn_save_dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //do something
+            }
+        });
+
         dialog.show();
     }
 }
