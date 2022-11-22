@@ -1,10 +1,32 @@
 package com.example.myapplication;
-
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
 
-
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.util.ArrayList;
+
 
 public class MainActivity extends FragmentActivity implements MainCallbacks {
 
@@ -17,15 +39,19 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
     AllPhotosLayout allPhotosLayout;
     AllAlbumLayout allAlbumLayout;
     SpecificAlbumLayout specificAlbumLayout;
+    //Tài
+    GridView gridPhoto;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ft = getSupportFragmentManager().beginTransaction();
         homeLayout = HomeLayout.newInstance();
         ft.replace(R.id.mainFrag_holder, homeLayout);
+
+
         ft.commit();
 
         ft = getSupportFragmentManager().beginTransaction();
@@ -44,8 +70,11 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
                 ft = getSupportFragmentManager().beginTransaction();
                 allPhotosLayout = AllPhotosLayout.newInstance();
                 ft.replace(R.id.mainFrag_holder, allPhotosLayout);
+
+
                 ft.commit();
             }
+
             else if (btn.equals("Home_Layout")){
                 ft = getSupportFragmentManager().beginTransaction();
                 homeLayout = HomeLayout.newInstance();
@@ -69,7 +98,13 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
         }
     }
 
-}
+
+
+
+
+}//Main activity
+
+
 
     /*
     GridView coursesGV;

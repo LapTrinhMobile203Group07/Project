@@ -39,15 +39,19 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
 
-        <GridView
-            android:id="@+id/gridAlbum"
+<!--        <GridView-->
+<!--            android:id="@+id/gridAlbum"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:numColumns="3"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:verticalSpacing="5dp"-->
+<!--            android:horizontalSpacing="5dp"/>-->
+        <ListView
+            android:id="@+id/ListView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:numColumns="3"
-            android:layout_gravity="center"
-            android:verticalSpacing="5dp"
-            android:horizontalSpacing="5dp"/>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
