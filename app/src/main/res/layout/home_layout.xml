@@ -72,43 +72,14 @@
             android:textAppearance="@style/my_album"
             android:textColor="@color/blue" />
     </RelativeLayout>
-
-    <HorizontalScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:id="@+id/ryc_album"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-<FrameLayout
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="900dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <GridView
-            android:id="@+id/GridView"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:columnWidth="100dp"
-            android:gravity="center"
-            android:horizontalSpacing="1dp"
-            android:listSelector="#0f0"
-            android:numColumns="10"
-            android:orientation="horizontal"
-            android:scrollbarAlwaysDrawHorizontalTrack="true"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbars="horizontal"
-            android:stretchMode="none"
-            android:rowCount="2"
+        android:layout_height="match_parent" />
 
 
-            android:verticalSpacing="1dp"
-            tools:context=".GridXMLActivity">
-
-        </GridView>
-    </LinearLayout>
-
-</FrameLayout>
-
-    </HorizontalScrollView>
 </LinearLayout>
 
 <!--

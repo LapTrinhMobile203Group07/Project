@@ -15,11 +15,21 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 public class HomeLayout extends Fragment implements FragmentCallbacks {
     MainActivity main;
     Context context;
     Button btnGo, btnSeeAll;
+    //Tai
+    private List<MyImage> listImage;
+    private RecyclerView ryc_album;
+    private AlbumAdapter albumAdapter;
+    private List<Album> listAlbum;
+    //
 
     public static HomeLayout newInstance(){
         HomeLayout fragment = new HomeLayout();
@@ -40,8 +50,12 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout home_layout = (LinearLayout) inflater.inflate(R.layout.home_layout, null);
-
         assignViewByFindId_HomeLayout(home_layout);
+        //Tai
+        listImage = GetAllPhotoFromGallery.getAllImageFromGallery(getContext());
+        setViewRyc();
+        albumAdapter.setData(listAlbum);
+        //
 
         btnGo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,11 +71,19 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
             }
         });
         return home_layout;
+    }// Oncreat
+    private void setViewRyc() {
+        ryc_album.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        albumAdapter = new AlbumAdapter(listAlbum, getContext());
+        ryc_album.setAdapter(albumAdapter);
     }
 
     private void assignViewByFindId_HomeLayout(LinearLayout layout){
         btnGo = (Button) layout.findViewById(R.id.btnGo);
         btnSeeAll = (Button) layout.findViewById(R.id.btnSeeAll);
+        //Tai
+        ryc_album = layout.findViewById(R.id.ryc_album);
+        //
     }
 
     @Override
@@ -75,6 +97,24 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.dialog_home_layout);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button btn_cancel_dialog = (Button) dialog.findViewById(R.id.btn_cancel_dialog);
+        Button btn_save_dialog = (Button) dialog.findViewById(R.id.btn_save_dialog);
+
+        btn_cancel_dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btn_save_dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //do something
+            }
+        });
+
         dialog.show();
     }
 }

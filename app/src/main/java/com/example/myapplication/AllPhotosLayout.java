@@ -136,24 +136,25 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
         );
 
         Log.i("ListingImages", " query count=" + cur);
-//        if (cur1.moveToFirst()) {
-//            String dataImage;
-//            String dataVideo;
-////            int dataColumn = cur.getColumnIndex(
-////                    MediaStore.Images.Media.DATA);
-//            int videoColumn = cur1.getColumnIndex(
-//                    MediaStore.Video.Media.DATA);
-//            do {
-//                // Get the field values
-////                dataImage = cur.getString(dataColumn);
-//                dataVideo = cur1.getString(videoColumn);
-//                // Do something with the values.
-////                Log.i("ListingImages", " Data=" + dataImage);
-//                Log.i("ListingImages", " Data=" + dataVideo);
-//                arrayList.add(new Photos(dataVideo));
-//            } while (cur1.moveToNext());
-//
-//        }
+        //Video
+        if (cur1.moveToFirst()) {
+            String dataImage;
+            String dataVideo;
+//            int dataColumn = cur.getColumnIndex(
+//                    MediaStore.Images.Media.DATA);
+            int videoColumn = cur1.getColumnIndex(
+                    MediaStore.Video.Media.DATA);
+            do {
+                // Get the field values
+//                dataImage = cur.getString(dataColumn);
+                dataVideo = cur1.getString(videoColumn);
+                // Do something with the values.
+//                Log.i("ListingImages", " Data=" + dataImage);
+                Log.i("ListingImages", " Data=" + dataVideo);
+                arrayList.add(new Photos(dataVideo));
+            } while (cur1.moveToNext());
+
+        }
         //Images
         if (cur.moveToFirst()) {
             String dataImage;
