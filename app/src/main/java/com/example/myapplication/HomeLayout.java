@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,10 +15,12 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeLayout extends Fragment implements FragmentCallbacks {
@@ -25,6 +28,7 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
     Context context;
     Button btnGo, btnSeeAll;
     //Tai
+    private View view;
     private List<MyImage> listImage;
     private RecyclerView ryc_album;
     private AlbumAdapter albumAdapter;
@@ -52,7 +56,7 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
         LinearLayout home_layout = (LinearLayout) inflater.inflate(R.layout.home_layout, null);
         assignViewByFindId_HomeLayout(home_layout);
         //Tai
-        listImage = GetAllPhotoFromGallery.getAllImageFromGallery(getContext());
+        listImage = GetAllPhotoFromGallery.getAllImageFromGallery(this.getContext());
         setViewRyc();
         albumAdapter.setData(listAlbum);
         //
@@ -72,9 +76,60 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
         });
         return home_layout;
     }// Oncreat
+    @Override
+    public void onStart() {
+        super.onStart();
+        MyAsyncTask myAsyncTask = new MyAsyncTask();
+        myAsyncTask.execute();
+    }//Onstart
+
+    public class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            listImage = GetAllPhotoFromGallery.getAllImageFromGallery(getContext());
+            listAlbum = getListAlbum(listImage);
+            return null;
+        }
+
+        @NonNull
+        private List<Album> getListAlbum(List<MyImage> listImage) {
+            List<String> ref = new ArrayList<>();
+            List<Album> listAlbum = new ArrayList<>();
+
+            for (int i = 0; i < listImage.size(); i++) {
+                String[] _array = listImage.get(i).getThumb().split("/");
+                String _pathFolder = listImage.get(i).getThumb().substring(0, listImage.get(i).getThumb().lastIndexOf("/"));
+                String _name = _array[_array.length - 2];
+                if (!ref.contains(_pathFolder)) {
+                    ref.add(_pathFolder);
+                    Album token = new Album(listImage.get(i), _name);
+                    token.setPathFolder(_pathFolder);
+                    token.addItem(listImage.get(i));
+                    listAlbum.add(token);
+                } else {
+                    listAlbum.get(ref.indexOf(_pathFolder)).addItem(listImage.get(i));
+                }
+            }
+            return listAlbum;
+        }//Get List Album
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            albumAdapter.setData(listAlbum);
+//            progressDialog.cancel();
+        }
+    }
+
     private void setViewRyc() {
-        ryc_album.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        albumAdapter = new AlbumAdapter(listAlbum, getContext());
+        ryc_album.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
+        albumAdapter = new AlbumAdapter(listAlbum, this.getContext());
         ryc_album.setAdapter(albumAdapter);
     }
 
