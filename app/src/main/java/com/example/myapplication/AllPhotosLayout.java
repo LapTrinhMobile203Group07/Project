@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.ContentProvider;
 import android.content.Context;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -24,6 +26,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -48,7 +52,17 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
                 }
             });
 
-
+    ActivityResultLauncher<Intent> activityLauncher=registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if(result.getResultCode()== Activity.RESULT_OK){
+                        Toast.makeText(context, "Register success", Toast.LENGTH_SHORT ).show();
+                    }
+                }
+            }
+    );
 
     //=============
 
@@ -119,15 +133,21 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
         String[] projection = new String[]{
                 MediaStore.Images.Media.DATA,
         };
+
         Uri images = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         Uri videos = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
         // Make the query.
+        Log.e("getImages: ", images.toString());
+
         Cursor cur = getContext().getContentResolver().query(images,
                 projection, // Which columns to return
                 null,       // Which rows to return (all rows)
                 null,       // Selection arguments (none)
                 null        // Ordering
         );
+
+        Log.e("123: ", cur.toString());
+
         Cursor cur1 = getContext().getContentResolver().query(videos,
                 projection, // Which columns to return
                 null,       // Which rows to return (all rows)
@@ -156,15 +176,20 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
 //        }
         //Images
         if (cur.moveToFirst()) {
+            Log.i("ListingImages", " query count=" + cur);
+
             String dataImage;
             int dataColumn = cur.getColumnIndex(
                     MediaStore.Images.Media.DATA);
+            Log.i("ListingImages", " query count=" + dataColumn);
+
             do {
                 // Get the field values
                 dataImage = cur.getString(dataColumn);
                 // Do something with the values.
                 Log.e("ListingImages", " Data path Image=" + dataImage);
 //                arrayList.add(new Photos(dataImage));
+                Log.e("Images", " Data Image=" + new Photos(dataImage));
                 arrayList.add(new Photos(dataImage));
 //                Log.i("ListingImages", " Data=" + dataVideo);
             } while (cur.moveToNext());
@@ -176,9 +201,17 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
 
         PhotosApdapter adapter = new PhotosApdapter(getContext(), R.layout.photo, arrayList);
         gridPhoto.setAdapter(adapter);
-
+        gridPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> container, View v, int position, long id) {
+                Log.e("click", "Anh " + arrayList.get(position).getPath());
+                Intent intent = new Intent (getContext(), PhotoActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("photo", arrayList.get(position));
+                intent.putExtras(bundle);
+                activityLauncher.launch(intent);
+            }
+        });
     } //GetImages
-
-
 
 }
