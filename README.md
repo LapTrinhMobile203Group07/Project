@@ -41,5 +41,3 @@ git clone https://github.com/LapTrinhMobile203Group07/Project.git
 - 20120568 - Nguyễn Đức Tài
 - 20120574 - Trần Duy Tân
 - 20120251 - Trần Đức Anh
-
-- 20120270 - Cao Tấn Đức
