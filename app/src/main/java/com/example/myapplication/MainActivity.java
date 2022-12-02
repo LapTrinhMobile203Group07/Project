@@ -50,15 +50,12 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
         ft = getSupportFragmentManager().beginTransaction();
         homeLayout = HomeLayout.newInstance();
         ft.replace(R.id.mainFrag_holder, homeLayout);
-
-
         ft.commit();
 
         ft = getSupportFragmentManager().beginTransaction();
         footerLayout = FooterLayout.newInstance();
         ft.replace(R.id.footFrag_holder, footerLayout);
         ft.commit();
-    
     }
 
 

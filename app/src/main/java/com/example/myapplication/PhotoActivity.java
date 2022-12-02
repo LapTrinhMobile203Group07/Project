@@ -3,6 +3,10 @@ package com.example.myapplication;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -15,12 +19,16 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.content.FileProvider;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 
 public class PhotoActivity extends Activity {
@@ -71,7 +79,18 @@ public class PhotoActivity extends Activity {
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Do something
+                String image_path = photo.getPath();
+                File file = new File(image_path);
+                Uri imageUri = FileProvider.getUriForFile(
+                        getApplicationContext(),
+                        BuildConfig.APPLICATION_ID +".provider", //(use your app signature + ".provider" )
+                        file);
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_STREAM, imageUri);
+                intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION );
+                startActivity(intent);
             }
         });
 

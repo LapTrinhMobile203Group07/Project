@@ -22,8 +22,7 @@ public class FooterLayout extends Fragment implements FragmentCallbacks {
     MainActivity main;
     Context context;
     Button btnPhotos, btnAlbums, btnSearch;
-    int position = 0;
-
+    int position = 1;
 
     public static FooterLayout newInstance(){
         FooterLayout fragment = new FooterLayout();
