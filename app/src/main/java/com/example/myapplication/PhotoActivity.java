@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -54,6 +55,7 @@ public class PhotoActivity extends Activity {
     Integer position = 0;
     ArrayList<Photos> arrayList = new ArrayList<>();
     BasicFileAttributes attr = null;
+    String ext = "";
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -66,6 +68,8 @@ public class PhotoActivity extends Activity {
         position = (Integer) getIntent().getExtras().get("position");
         photoCur =  arrayList.get(position);
         setTime();
+        String path = photoCur.getPath();
+        ext = path.substring(path.lastIndexOf('.'));
 
         ImageAdapter adapter = new ImageAdapter(this, arrayList);
         viewPager.setAdapter(adapter);
@@ -183,9 +187,37 @@ public class PhotoActivity extends Activity {
         btnEditInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnEditInfo.setText("123");
                 String oldName = String.valueOf(filename.getText());
+
+                if(btnEditInfo.getText() == "Save"){
+                    String image_path = photoCur.getPath();
+                    String image_contain = image_path.substring(0, image_path.lastIndexOf('/')+1);
+                    Log.e("onClick1: ", image_contain);
+                    Log.e("onClick5: ", ext);
+                    File file = new File(image_path);
+
+
+                    File fileNew = new File(image_contain + filename.getText() + ext);
+                    Log.e("onClick2: ", file+ "");
+                    Log.e("onClick3: ", fileNew+ "");
+
+                    File sdcard = Environment.getExternalStorageDirectory();
+                    File from = new File(sdcard,"from.txt");
+                    File to = new File(sdcard,"to.txt");
+                    boolean renamed = from.renameTo(to);
+                    Log.d("LOG","File renamed..."+file.exists());
+
+                    if (renamed) {
+                        Log.d("LOG","File renamed...");
+                    }else {
+                        Log.d("LOG","File not renamed..." + from);
+                    }
+                    return;
+                }
+                filename.setText(oldName.substring(0, oldName.lastIndexOf('.')));
+                filename.setBackgroundResource(R.drawable.background_edittext);
                 filename.setEnabled(true);
+                filename.requestFocus();
                 filename.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -193,12 +225,12 @@ public class PhotoActivity extends Activity {
                     public void onTextChanged(CharSequence s, int start, int before, int count) {}
                     @Override
                     public void afterTextChanged(Editable s) {
-                        if(String.valueOf(filename.getText()) != oldName){
-                            filename.setBackground(R.drawable.background_editText);
+                        if(filename.getText()+ext != oldName){
                             btnEditInfo.setText("Save");
                         }
                     }
                 });
+
             }
         });
 

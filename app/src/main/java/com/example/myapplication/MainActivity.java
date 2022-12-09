@@ -38,9 +38,6 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
     HomeLayout homeLayout;
     AllPhotosLayout allPhotosLayout;
     AllAlbumLayout allAlbumLayout;
-    SpecificAlbumLayout specificAlbumLayout;
-    //Tài
-    GridView gridPhoto;
 
 
     @Override
