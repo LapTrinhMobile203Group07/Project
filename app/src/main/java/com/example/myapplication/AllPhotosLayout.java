@@ -34,7 +34,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
@@ -43,7 +42,6 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
     GridView gridPhoto;
     Button btnSelect;
     private static PhotosApdapter adapter;
-    //Array Media
     ArrayList<Photos> arrayList = new ArrayList<>();
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
             result -> {
@@ -111,10 +109,8 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
 
     @Override
     public void onResume() {
-
         super.onResume();
         getImages();
-
     }
 
     private void assignViewByFindId(LinearLayout layout) {
@@ -146,34 +142,7 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
                 null        // Ordering
         );
 
-        Log.e("123: ", cur.toString());
-
-        Cursor cur1 = getContext().getContentResolver().query(videos,
-                projection, // Which columns to return
-                null,       // Which rows to return (all rows)
-                null,       // Selection arguments (none)
-                null        // Ordering
-        );
-
         Log.i("ListingImages", " query count=" + cur);
-//        if (cur1.moveToFirst()) {
-//            String dataImage;
-//            String dataVideo;
-////            int dataColumn = cur.getColumnIndex(
-////                    MediaStore.Images.Media.DATA);
-//            int videoColumn = cur1.getColumnIndex(
-//                    MediaStore.Video.Media.DATA);
-//            do {
-//                // Get the field values
-////                dataImage = cur.getString(dataColumn);
-//                dataVideo = cur1.getString(videoColumn);
-//                // Do something with the values.
-////                Log.i("ListingImages", " Data=" + dataImage);
-//                Log.i("ListingImages", " Data=" + dataVideo);
-//                arrayList.add(new Photos(dataVideo));
-//            } while (cur1.moveToNext());
-//
-//        }
         //Images
         if (cur.moveToFirst()) {
             Log.i("ListingImages", " query count=" + cur);
@@ -204,14 +173,27 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
         gridPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> container, View v, int position, long id) {
-                Log.e("click", "Anh " + arrayList.get(position).getPath());
                 Intent intent = new Intent (getContext(), PhotoActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("photo", arrayList.get(position));
+                Bundle bundle = new Bundle();
+                bundle.putInt("position", position);
                 intent.putExtras(bundle);
                 activityLauncher.launch(intent);
             }
         });
     } //GetImages
-
+    public ArrayList<Photos> GetMax10Photos(int position){
+        if(arrayList.size() <= 10){
+            return arrayList;
+        }
+        else if (position<5){
+            return new ArrayList<>(arrayList.subList(0, 10));
+        }
+        else {
+            int end = position+5;
+            if(arrayList.size() - position < 5){
+                end = arrayList.size();
+            }
+            return new ArrayList<>(arrayList.subList(position-5, end));
+        }
+    }
 }
