@@ -43,7 +43,7 @@ public class ImageAdapter extends PagerAdapter {
         File file = new File(image_path);
         Uri imageUri = FileProvider.getUriForFile(
                         mContext.getApplicationContext(),
-                        BuildConfig.APPLICATION_ID +".provider", //(use your app signature + ".provider" )
+                        "com.example.myapplication" +".provider", //(use your app signature + ".provider" )
                         file);
         imageView.setImageURI(imageUri);
         container.addView(imageView, 0);
