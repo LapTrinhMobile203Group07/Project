@@ -2,9 +2,11 @@ package com.example.myapplication;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AppOpsManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
@@ -12,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -37,7 +40,9 @@ import androidx.viewpager.widget.ViewPager;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,15 +61,17 @@ public class PhotoActivity extends Activity {
     ArrayList<Photos> arrayList = new ArrayList<>();
     BasicFileAttributes attr = null;
     String ext = "";
+    private ActivityResultLauncher<String> requestPermissionLauncher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photo_item_page);
         assignViewByFindId();
+
         GetAllPhotos();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ROOT);
-
         position = (Integer) getIntent().getExtras().get("position");
         photoCur =  arrayList.get(position);
         setTime();
@@ -184,34 +191,31 @@ public class PhotoActivity extends Activity {
             fileSizeResult = String.format(Locale.ROOT, "%d KB", fileSizeNumber);
         filesize.setText(fileSizeResult);
 
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setContentView(photo_InfoView);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         btnEditInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String oldName = String.valueOf(filename.getText());
+                String oldName = current_file.getName();
 
                 if(btnEditInfo.getText() == "Save"){
                     String image_path = photoCur.getPath();
-                    String image_contain = image_path.substring(0, image_path.lastIndexOf('/')+1);
-                    Log.e("onClick1: ", image_contain);
-                    Log.e("onClick5: ", ext);
-                    File file = new File(image_path);
+                    String pathDirectory = image_path.substring(0, image_path.lastIndexOf('/')+1);
+                    File directory = new File(pathDirectory);
+                    File file = new File(directory, oldName);
+                    File fileNew = new File(directory, filename.getText() + ext);
 
-
-                    File fileNew = new File(image_contain + filename.getText() + ext);
-                    Log.e("onClick2: ", file+ "");
-                    Log.e("onClick3: ", fileNew+ "");
-
-                    File sdcard = Environment.getExternalStorageDirectory();
-                    File from = new File(sdcard,"from.txt");
-                    File to = new File(sdcard,"to.txt");
-                    boolean renamed = from.renameTo(to);
-                    Log.d("LOG","File renamed..."+file.exists());
-
+                    boolean renamed = file.renameTo(fileNew);
                     if (renamed) {
-                        Log.d("LOG","File renamed...");
+                        Toast.makeText(getBaseContext(), "Success!", Toast.LENGTH_SHORT).show();
                     }else {
-                        Log.d("LOG","File not renamed..." + from);
+                        Toast.makeText(getBaseContext(), "Fail!", Toast.LENGTH_SHORT).show();
                     }
+                    dialog.dismiss();
                     return;
                 }
                 filename.setText(oldName.substring(0, oldName.lastIndexOf('.')));
@@ -233,12 +237,6 @@ public class PhotoActivity extends Activity {
 
             }
         });
-
-        Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.setContentView(photo_InfoView);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }
 
@@ -286,4 +284,5 @@ public class PhotoActivity extends Activity {
         photoDateCreate.setText(sdf_date.format(attr.creationTime().toMillis()));
         photoTimeCreate.setText(sdf_time.format(attr.creationTime().toMillis()));
     }
+
 }

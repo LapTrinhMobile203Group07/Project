@@ -2,16 +2,20 @@ package com.example.myapplication;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AppOpsManager;
 import android.content.ContentProvider;
 import android.content.Context;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,12 +47,6 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
     Button btnSelect;
     private static PhotosApdapter adapter;
     ArrayList<Photos> arrayList = new ArrayList<>();
-    private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
-            result -> {
-                if (result) {
-                    getImages();
-                }
-            });
 
     ActivityResultLauncher<Intent> activityLauncher=registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -87,14 +85,7 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
 
         LinearLayout All_Photo_layout = (LinearLayout) inflater.inflate(R.layout.all_photos_layout, null);
         assignViewByFindId(All_Photo_layout);
-        //Tài
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            activityResultLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        } else if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            activityResultLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
-        } else {
-            getImages();
-        }
+        main.requestPermissions();
 
         //=========
         btnSelect.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +102,7 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
     public void onResume() {
         super.onResume();
         getImages();
+
     }
 
     private void assignViewByFindId(LinearLayout layout) {
@@ -181,19 +173,4 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
             }
         });
     } //GetImages
-    public ArrayList<Photos> GetMax10Photos(int position){
-        if(arrayList.size() <= 10){
-            return arrayList;
-        }
-        else if (position<5){
-            return new ArrayList<>(arrayList.subList(0, 10));
-        }
-        else {
-            int end = position+5;
-            if(arrayList.size() - position < 5){
-                end = arrayList.size();
-            }
-            return new ArrayList<>(arrayList.subList(position-5, end));
-        }
-    }
 }

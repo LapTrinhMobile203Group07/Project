@@ -1,13 +1,18 @@
 package com.example.myapplication;
 import android.Manifest;
 import android.app.Activity;
+import android.app.AppOpsManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -34,16 +40,18 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
     FooterLayout footerLayout;
     SearchLayout searchLayout;
 
-    
     HomeLayout homeLayout;
     AllPhotosLayout allPhotosLayout;
     AllAlbumLayout allAlbumLayout;
-
+    private ActivityResultCallback<Boolean> result;
+    private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result);
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        requestPermissions();
+
         ft = getSupportFragmentManager().beginTransaction();
         homeLayout = HomeLayout.newInstance();
         ft.replace(R.id.mainFrag_holder, homeLayout);
@@ -64,8 +72,6 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
                 ft = getSupportFragmentManager().beginTransaction();
                 allPhotosLayout = AllPhotosLayout.newInstance();
                 ft.replace(R.id.mainFrag_holder, allPhotosLayout);
-
-
                 ft.commit();
             }
 
@@ -92,6 +98,30 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
         }
     }
 
+    public void requestPermissions (){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            activityResultLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            activityResultLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+        if (!hasAllFilesAccess()) {
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+            startActivity(intent);
+        }
+    }
+    public boolean hasAllFilesAccess() {
+        AppOpsManager appOpsManager = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
+        try {
+            ApplicationInfo app  = getPackageManager().getApplicationInfo(getPackageName(), 0);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                return appOpsManager.unsafeCheckOpNoThrow("android:manage_external_storage",app.uid, getPackageName()) == AppOpsManager.MODE_ALLOWED;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 
 

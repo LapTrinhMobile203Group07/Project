@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:requestLegacyExternalStorage="true"
     android:usesCleartextTraffic="true">
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
 
     <application
         android:requestLegacyExternalStorage="true"
@@ -71,13 +72,15 @@
                 android:value="" />
         </activity>
         <activity
+            android:requestLegacyExternalStorage="true"
             android:name=".PhotoActivity"
             android:exported="false" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            >
             <!-- ressource file to create -->
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
