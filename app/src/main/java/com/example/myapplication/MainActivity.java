@@ -1,4 +1,7 @@
 package com.example.myapplication;
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Environment.isExternalStorageManager;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AppOpsManager;
@@ -11,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
@@ -114,8 +118,16 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
         AppOpsManager appOpsManager = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
         try {
             ApplicationInfo app  = getPackageManager().getApplicationInfo(getPackageName(), 0);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                return appOpsManager.unsafeCheckOpNoThrow("android:manage_external_storage",app.uid, getPackageName()) == AppOpsManager.MODE_ALLOWED;
+
+            if (SDK_INT < Build.VERSION_CODES.Q) {
+                return true;
+            }
+            else {
+                return appOpsManager.unsafeCheckOpNoThrow(
+                        "android:manage_external_storage",
+                        app.uid,
+                        getPackageName()
+                ) == AppOpsManager.MODE_ALLOWED;
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
