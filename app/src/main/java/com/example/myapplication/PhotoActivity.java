@@ -6,11 +6,14 @@ import android.app.AppOpsManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+<<<<<<< HEAD
+=======
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+>>>>>>> 6caaee0ac43a5e7eee39140219fe3eff6cb5e2c9
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -103,8 +106,13 @@ public class PhotoActivity extends Activity {
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                // Do something
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(PhotoActivity.this,EditPhoto.class);
+                intent.putExtra("ImageUri", photo.getPath());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
             }
         });
 
