@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,13 +33,13 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditPhoto extends AppCompatActivity implements EditCallBacks
+
+public class EditPhoto extends FragmentActivity implements EditCallBacks
 {
     Button btnCancle,btnSave;
     EditImageView editImageView;
@@ -137,7 +138,7 @@ public class EditPhoto extends AppCompatActivity implements EditCallBacks
 
     public void inflateFragment(Fragment fragment) {
         toolsRecView.setVisibility(View.GONE);
-        getSupportActionBar().hide();
+        //.hide();
         currentFragment = fragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.editFragment, currentFragment).commit();
     }
@@ -155,7 +156,7 @@ public class EditPhoto extends AppCompatActivity implements EditCallBacks
         }
 
         getSupportFragmentManager().beginTransaction().remove(currentFragment).commit();
-        getSupportActionBar().show();
+        //getSupportActionBar().show();
         toolsRecView.setVisibility(View.VISIBLE);
     }
 
