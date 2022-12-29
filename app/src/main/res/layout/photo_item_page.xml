@@ -11,16 +11,15 @@
             android:id="@+id/itemClickBack"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
+            android:layout_weight="0.7"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center|right"
+            android:paddingRight="20dp">
 
             <Button
                 android:id="@+id/button_clickback"
-                android:layout_width="37dp"
+                android:layout_width="26dp"
                 android:layout_height="31dp"
-                android:layout_marginLeft="-20dp"
                 android:background="@drawable/ic_baseline_arrow_back_ios_24" />
 
         </LinearLayout>
@@ -29,24 +28,23 @@
             android:id="@+id/itemInfo"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
+            android:layout_weight="3"
             android:orientation="vertical"
             android:gravity="center">
+            <TextView
+                android:id="@+id/locate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Location?"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/black"/>
             <TextView
                 android:id="@+id/photoDateCreate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
-            <TextView
-                android:id="@+id/photoTimeCreate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Time"
-                android:textStyle="italic"
+                android:text="Date?"
                 android:textSize="15sp"
                 android:textColor="@color/black"/>
 
@@ -57,15 +55,13 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_margin="5dp"
             android:orientation="horizontal"
             android:gravity="center">
 
             <Button
                 android:id="@+id/btnEdit"
-                android:layout_width="61dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="-20dp"
+                android:layout_width="66dp"
+                android:layout_height="30dp"
                 android:text="Edit"
                 android:textColor="@color/blue"
                 android:textAllCaps="false"

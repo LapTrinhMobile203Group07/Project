@@ -19,43 +19,44 @@
             android:textSize="20sp" />
 
     </RelativeLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:id="@+id/search_bar_1"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:scaleType="center"
+            android:paddingBottom="60dp"
+            android:src="@drawable/search_bar_1" />
+
+        <EditText
+            android:id="@+id/editText_search"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginLeft="125dp"
+            android:textColor="@color/black"
+            android:hint="Search">
+
+        </EditText>
+    </RelativeLayout>
+
 
     <ScrollView
         android:id="@+id/search_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-        <RelativeLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_grid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/search_bar_1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="50dp"
-                android:src="@drawable/search_bar_1" />
-
-            <EditText
-                android:layout_width="201dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="220dp"
-                android:layout_marginLeft="125dp"
-                android:textColor="@color/black"
-                android:hint="Search">
-
-
-            </EditText>
-
-
-        </RelativeLayout>
+            android:layout_height="wrap_content"/>
     </ScrollView>
-
-
 
 </LinearLayout>

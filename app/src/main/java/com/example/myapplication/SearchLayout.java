@@ -1,18 +1,47 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import androidx.core.content.FileProvider;
+import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class SearchLayout extends Fragment implements FragmentCallbacks {
     MainActivity main;
     Context context;
-
+    EditText editText_search;
+    RecyclerView recyclerView;
+    List<Photos> arrayList = new ArrayList<Photos>();
+    List<Photos> filterList = new ArrayList<Photos>();
+    ImageAdapterRcv imageAdapterRcv;
     public static SearchLayout newInstance(){
         SearchLayout fragment = new SearchLayout();
         return fragment;
@@ -30,13 +59,153 @@ public class SearchLayout extends Fragment implements FragmentCallbacks {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        GetAllPhotos();
+        filter();
+        Log.e("onResume: ", "11111111111111111111111");
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         LinearLayout layout= (LinearLayout) inflater.inflate(R.layout.search_page_layout, null);
+        recyclerView = layout.findViewById(R.id.rcv_grid);
+        editText_search = layout.findViewById(R.id.editText_search);
 
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(main.getApplication(), 4);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        imageAdapterRcv = new ImageAdapterRcv(main.getApplicationContext(),filterList);
+        recyclerView.setAdapter(imageAdapterRcv);
+
+//        recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> container, View v, int position, long id) {
+//                Intent intent = new Intent (getContext(), PhotoActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("position", position);
+//                intent.putExtras(bundle);
+//                activityLauncher.launch(intent);
+//            }
+//        });
+
+        editText_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter();
+            }
+        });
         return layout;
     }
 
+    public void filter(){
+        filterList.clear();
+        if(editText_search.getText().length()>0){
+            for(Photos photo : arrayList) {
+                String image_path = photo.getPath();
+                Uri imageUri = FileProvider.getUriForFile(
+                        main.getApplicationContext(),
+                        BuildConfig.APPLICATION_ID + ".provider", //(use your app signature + ".provider" )
+                        new File(photo.getPath()));
+
+                File file = new File(image_path);
+                if (file.getName().toLowerCase().contains(editText_search.getText().toString().toLowerCase(Locale.ROOT))) {
+                    filterList.add(photo);
+                    continue;
+                }
+                ParcelFileDescriptor parcelFileDescriptor = null;
+                try {
+                    parcelFileDescriptor = getActivity().getContentResolver().openFileDescriptor(imageUri, "r");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+                ExifInterface exifInterface = null;
+                try {
+                    exifInterface = new ExifInterface(fileDescriptor);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String str_latitude = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
+                String str_longitude = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
+                if (str_latitude == null || str_longitude == null) {
+                    continue;
+                } else {
+                    Geocoder geocoder;
+                    List<Address> addresses = null;
+                    geocoder = new Geocoder(main.getApplication(), Locale.getDefault());
+                    try {
+                        addresses = geocoder.getFromLocation(
+                                ConvertStringToLat(exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE)),
+                                ConvertStringToLat(exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE)),
+                                1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    String state = addresses.get(0).getAdminArea();
+                    String country = addresses.get(0).getCountryName();
+                    if (state.toLowerCase(Locale.ROOT).contains(editText_search.getText().toString().toLowerCase(Locale.ROOT))
+                            || country.toLowerCase(Locale.ROOT).contains(editText_search.getText().toString().toLowerCase(Locale.ROOT))) {
+                        filterList.add(photo);
+                        continue;
+                    }
+                }
+            }
+        }
+        imageAdapterRcv.filterList(filterList);
+        //recyclerView.setAdapter(new ImageAdapterRcv(main.getApplicationContext(),arrayList));
+        Log.e("afterTextChanged: ", " "+arrayList.size() );
+    }
+
+    public double ConvertStringToLat(String str){ //ex: "12/1,10/1,20012/2012" => 12.16943
+        Log.e("ConvertStringToLat: ", str+ " 123");
+        if(str == null) return 0;
+        String[] split1 = str.split(",");
+        double result = 0;
+        int i = 1;
+        for (String s : split1) {
+            String[] split2 = s.split("/");
+            result += Double.parseDouble(split2[0])/Double.parseDouble(split2[1])/i;
+            i *= 60;
+        }
+        return result;
+    }
+
+
+    public void GetAllPhotos(){
+        arrayList.clear();
+        String[] projection = new String[]{
+                MediaStore.Images.Media.DATA,
+        };
+
+        Uri images = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        Log.e("getImages: ", images.toString());
+
+        Cursor cur = main.getApplicationContext().getContentResolver().query(images,
+                projection, // Which columns to return
+                null,       // Which rows to return (all rows)
+                null,       // Selection arguments (none)
+                null        // Ordering
+        );
+        if (cur.moveToFirst()) {
+            String dataImage;
+            int dataColumn = cur.getColumnIndex(
+                    MediaStore.Images.Media.DATA);
+            do {
+                // Get the field values
+                dataImage = cur.getString(dataColumn);
+                // Do something with the values.
+                Log.e("ListingImages", " Data path Image=" + dataImage);
+//                arrayList.add(new Photos(dataImage));
+                Log.e("Images", " Data Image=" + new Photos(dataImage));
+                arrayList.add(new Photos(dataImage));
+                Log.e("ListingImages", " Data path Image=" + "111111111111");
+            } while (cur.moveToNext());
+        }
+    }
     @Override
     public void onMsgFromMainToFragment(String btn) {
 

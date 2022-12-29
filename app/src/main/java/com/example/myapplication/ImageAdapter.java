@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.github.chrisbanes.photoview.PhotoView;
 import com.jsibbold.zoomage.ZoomageView;
 
 import java.io.File;
@@ -38,7 +39,7 @@ public class ImageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        ZoomageView imageView = new ZoomageView(mContext);
+        PhotoView imageView = new PhotoView(mContext);
         String image_path = arrayList.get(position).getPath();
         File file = new File(image_path);
         Uri imageUri = FileProvider.getUriForFile(

@@ -48,7 +48,7 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
     private static PhotosApdapter adapter;
     ArrayList<Photos> arrayList = new ArrayList<>();
 
-    ActivityResultLauncher<Intent> activityLauncher=registerForActivityResult(
+    ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -102,7 +102,6 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
     public void onResume() {
         super.onResume();
         getImages();
-
     }
 
     private void assignViewByFindId(LinearLayout layout) {
