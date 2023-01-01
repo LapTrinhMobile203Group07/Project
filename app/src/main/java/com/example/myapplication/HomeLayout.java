@@ -13,15 +13,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+
+
+//Tai
+import com.example.myapplication.Apdapter.AlbumAdapter;
+import com.example.myapplication.Apdapter.AlbumsAdapter;
+//
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.xml.namespace.QName;
 
 public class HomeLayout extends Fragment implements FragmentCallbacks {
     MainActivity main;
@@ -33,6 +45,7 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
     private RecyclerView ryc_album;
     private AlbumAdapter albumAdapter;
     private List<Album> listAlbum;
+    private AlbumsAdapter albumsAdapter;
     //
 
     public static HomeLayout newInstance(){
@@ -57,6 +70,9 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
         assignViewByFindId_HomeLayout(home_layout);
         //Tai
         listImage = GetAllPhotoFromGallery.getAllImageFromGallery(this.getContext());
+        Log.d("list type", "============================================ ");
+        Log.d("list type", String.valueOf(listImage));
+        Log.d("list type", "============================================ ");
         setViewRyc();
         albumAdapter.setData(listAlbum);
         //
@@ -94,6 +110,8 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
         protected Void doInBackground(Void... voids) {
             listImage = GetAllPhotoFromGallery.getAllImageFromGallery(getContext());
             listAlbum = getListAlbum(listImage);
+            Log.d("List","");
+
             return null;
         }
 
@@ -152,6 +170,11 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.dialog_home_layout);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //Tài
+        EditText edtAlbumName = dialog.findViewById(R.id.AlbumName);
+
+        //
+
 
         Button btn_cancel_dialog = (Button) dialog.findViewById(R.id.btn_cancel_dialog);
         Button btn_save_dialog = (Button) dialog.findViewById(R.id.btn_save_dialog);
@@ -166,7 +189,19 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
         btn_save_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //do something
+                //Create Album here
+                String newAlbumName = edtAlbumName.getText().toString();
+                if (newAlbumName.length() != 0) {
+                    if (AlbumUtility.getInstance(context).addNewAlbum(newAlbumName)) {
+                        albumsAdapter.addAlbum(newAlbumName);
+                        Toast.makeText(context, "New album created successfully!", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(context, "Error: Failed to create new album!", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(context, "Empty Album Name!", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

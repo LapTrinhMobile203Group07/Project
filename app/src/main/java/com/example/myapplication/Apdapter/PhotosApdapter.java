@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Apdapter;
 
 
 import android.Manifest;
@@ -22,6 +22,9 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
+import com.example.myapplication.Photos;
+import com.example.myapplication.R;
+import com.example.myapplication.onBindView;
 
 import java.util.ArrayList;
 
