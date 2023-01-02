@@ -22,6 +22,7 @@
         android:textSize="18sp"
         android:textColor="@color/black"/>
     <EditText
+        android:id="@+id/AlbumName"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:hint="Title"

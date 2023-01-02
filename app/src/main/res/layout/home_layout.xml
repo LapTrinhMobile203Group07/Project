@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -39,76 +40,49 @@
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/my_album"
             android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:layout_alignParentTop="true"
+            android:layout_height="40dp"
             android:layout_marginStart="19dp"
-            android:layout_marginTop="19dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="19dp"
             android:layout_marginBottom="19dp"
             android:fontFamily="@font/cabin"
             android:gravity="center_vertical"
             android:lineSpacingExtra="4sp"
             android:text="@string/my_album"
-            android:textAppearance="@style/my_album" />
+            android:textAppearance="@style/my_album"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnSeeAll"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/cabin"
+            android:layout_marginTop="-5dp"
             android:layout_marginEnd="20dp"
+            android:fontFamily="@font/cabin"
             android:text="@string/see_all"
-            style="@style/Widget.AppCompat.Button.Borderless"
             android:textAppearance="@style/my_album"
-            android:textColor="@color/blue" />
-    </RelativeLayout>
-
-    <HorizontalScrollView
+            android:textColor="@color/blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:id="@+id/ryc_album"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-<FrameLayout
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="900dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <GridView
-            android:id="@+id/GridView"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:columnWidth="100dp"
-            android:gravity="center"
-            android:horizontalSpacing="1dp"
-            android:listSelector="#0f0"
-            android:numColumns="10"
-            android:orientation="horizontal"
-            android:scrollbarAlwaysDrawHorizontalTrack="true"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbars="horizontal"
-            android:stretchMode="none"
-            android:rowCount="2"
+        android:layout_height="match_parent" />
 
 
-            android:verticalSpacing="1dp"
-            tools:context=".GridXMLActivity">
-
-        </GridView>
-    </LinearLayout>
-
-</FrameLayout>
-
-    </HorizontalScrollView>
 </LinearLayout>
 
 <!--

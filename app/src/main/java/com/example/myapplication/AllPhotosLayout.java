@@ -38,6 +38,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.Apdapter.PhotosApdapter;
+import java.io.File;
 import java.util.ArrayList;
 
 public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
@@ -46,6 +48,7 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
     GridView gridPhoto;
     Button btnSelect;
     private static PhotosApdapter adapter;
+    //Array Media
     ArrayList<Photos> arrayList = new ArrayList<>();
 
     ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(
@@ -100,8 +103,10 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
 
     @Override
     public void onResume() {
+
         super.onResume();
         getImages();
+
     }
 
     private void assignViewByFindId(LinearLayout layout) {
@@ -132,8 +137,33 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
                 null,       // Selection arguments (none)
                 null        // Ordering
         );
+        Cursor cur1 = getContext().getContentResolver().query(videos,
+                projection, // Which columns to return
+                null,       // Which rows to return (all rows)
+                null,       // Selection arguments (none)
+                null        // Ordering
+        );
 
         Log.i("ListingImages", " query count=" + cur);
+        //Video
+        if (cur1.moveToFirst()) {
+            String dataImage;
+            String dataVideo;
+//            int dataColumn = cur.getColumnIndex(
+//                    MediaStore.Images.Media.DATA);
+            int videoColumn = cur1.getColumnIndex(
+                    MediaStore.Video.Media.DATA);
+            do {
+                // Get the field values
+//                dataImage = cur.getString(dataColumn);
+                dataVideo = cur1.getString(videoColumn);
+                // Do something with the values.
+//                Log.i("ListingImages", " Data=" + dataImage);
+                Log.i("ListingImages", " Data=" + dataVideo);
+                arrayList.add(new Photos(dataVideo));
+            } while (cur1.moveToNext());
+
+        }
         //Images
         if (cur.moveToFirst()) {
             Log.i("ListingImages", " query count=" + cur);

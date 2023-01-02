@@ -1,58 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/white">
-    <LinearLayout
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAdd_AlbumsFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_round_add_24"
+        android:layout_gravity="right|bottom"
+        app:fabSize="auto"
+        android:layout_below="@+id/albumsRecView"
+
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/albumsRecView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp">
+        android:layout_height="wrap_content"
+        android:background="@color/white"/>
 
-            <TextView
-                android:id="@+id/txtTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="My Album"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-            <Button
-                android:id="@+id/btnSelect"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:padding="0dp"
-                android:layout_marginEnd="10dp"
-                android:textSize="11sp"
-                android:textColor="#0066ff"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/custom_button_edit"
-                android:textAllCaps="false"
-                android:text="Select"/>
-        </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
 
-<!--        <GridView-->
-<!--            android:id="@+id/gridAlbum"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:numColumns="3"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:verticalSpacing="5dp"-->
-<!--            android:horizontalSpacing="5dp"/>-->
-        <ListView
-            android:id="@+id/ListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
-    </LinearLayout>
+
+
+
 
 </LinearLayout>

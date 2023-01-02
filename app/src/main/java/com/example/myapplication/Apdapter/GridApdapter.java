@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Apdapter;
 
 
 import android.app.Activity;
@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.myapplication.ImageItem;
+import com.example.myapplication.R;
 
 
 public class GridApdapter extends ArrayAdapter<ImageItem>
