@@ -1,4 +1,4 @@
-package com.example.myapplication.Apdapter;
+package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -20,7 +20,7 @@ import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
-import com.example.myapplication.*;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -51,7 +51,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_album, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.albums_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -66,7 +66,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
             albumItemCount = data.getPicturePaths().size();
         }
         //int albumItemCount = AlbumUtility.getInstance(context).findDataByAlbumName(currentAlbum).getPicturePaths().size();
-        holder.txtName_album.setText(currentAlbum);
+        holder.albumName.setText(currentAlbum);
         holder.albumItemCount.setText(String.format(Locale.ROOT, "%d item(s)",albumItemCount));
     }
 
@@ -77,18 +77,24 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView albumThumbnail;
-        TextView txtName_album, albumItemCount;
+        TextView albumName, albumItemCount;
         ImageView albumItemMenu;
         MaterialCardView albumItemCard;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            albumThumbnail = itemView.findViewById(R.id.img_album);
-            txtName_album = itemView.findViewById(R.id.txtName_album);
-            albumItemCount = itemView.findViewById(R.id.txtCount_item_album);
+            albumThumbnail = itemView.findViewById(R.id.albumThumbnail);
+            albumName = itemView.findViewById(R.id.albumName);
+            albumItemCount = itemView.findViewById(R.id.albumItemCount);
+            albumItemMenu = itemView.findViewById(R.id.albumItemMenu);
+            albumItemCard = itemView.findViewById(R.id.albumItemCard);
 
-            albumItemCard = itemView.findViewById(R.id.img_item_album);
-
+            albumItemMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showAlbumPopupMenu(albumItemMenu);
+                }
+            });
             albumItemCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -101,6 +107,19 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
         private void showAlbumPopupMenu(View itemView) {
             String currentAlbum = albums.get(getAdapterPosition());
             PopupMenu popupMenu = new PopupMenu(itemView.getContext(), itemView);
+            popupMenu.inflate(R.menu.album_menu);
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int itemId = item.getItemId();
+                    if (R.id.editAlbum == itemId) {
+                        handleEditAlbumItem(itemView);
+                    } else if (R.id.deleteAlbum == itemId) {
+                        handleDeleteAlbumItem(itemView);
+                    }
+                    return true;
+                }
+            });
             popupMenu.show();
 
         }

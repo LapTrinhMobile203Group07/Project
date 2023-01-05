@@ -1,4 +1,4 @@
-package com.example.myapplication.Apdapter;
+package com.example.myapplication;
 
 
 import android.app.Activity;
@@ -37,8 +37,8 @@ public class GridApdapter extends ArrayAdapter<ImageItem>
         ImageView avatar = row.findViewById(R.id.avatar);
 
         txtName.setText(items[position].getName());
-        Log.e("ADebugTag", "============================================================");
-        Log.e("ADebugTag", "Item=    " + items[position].getAvatar());
+//        Log.e("ADebugTag", "============================================================");
+//        Log.e("ADebugTag", "Item=    " + items[position].getAvatar());
         avatar.setImageResource(items[position].getAvatar());
         return (row);
     }

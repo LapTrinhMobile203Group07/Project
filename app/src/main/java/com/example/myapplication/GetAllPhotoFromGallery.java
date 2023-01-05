@@ -67,8 +67,8 @@ public class GetAllPhotoFromGallery {
             if(image.getPath()==""){
                 continue;
             }
-            Log.d("Path",image.getPath());
-            Log.d("Path",listImage.size()+"");
+//            Log.d("Path",image.getPath());
+//            Log.d("Path",listImage.size()+"");
             listImage.add(image);
         }
         return listImage;

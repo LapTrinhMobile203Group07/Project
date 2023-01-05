@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center">
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:paddingTop="30dp"
+    android:gravity="center"
 
+    android:background="@drawable/custom_dialog_newalbum">
 
     <TextView
-        android:id="@+id/txtFormTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add New Album"
-        android:textSize="24sp"
-        android:textStyle="bold"/>
+        android:gravity="center"
+        android:id="@+id/txtFormTitle"
+        android:text="Input the album name."
+        android:textSize="18sp"
+        android:textColor="@color/black"/>
+<!--    <EditText-->
+<!--        -->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:inputType="text"-->
+<!--        android:hint="Enter new album name"/>-->
     <EditText
         android:id="@+id/edtAlbumName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:inputType="text"
-        android:hint="Enter new album name"/>
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+        android:textSize="22sp"
+        android:layout_margin="15dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:hint="Enter new album name"
+        android:background="@drawable/custom_input_newalbum"/>
 
 </LinearLayout>

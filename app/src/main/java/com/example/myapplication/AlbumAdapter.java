@@ -1,6 +1,7 @@
-package com.example.myapplication.Apdapter;
+package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.myapplication.Album;
-import com.example.myapplication.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.util.ArrayList;
 import java.util.List;
+//add Item onclick activity
+
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder> {
     private List<Album> mListAlbums;
@@ -77,12 +79,29 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
 
         public void onBind(Album ref, int pos) {
             bindData(ref);
+            // Mở Album
+            img_album.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ItemAlbumActivity.class);
+                    ArrayList<String> list = new ArrayList<>();
+                    for(int i=0;i<ref.getList().size();i++) {
+                        list.add(ref.getList().get(i).getThumb());
+                    }
+
+//                    intent.putStringArrayListExtra("data", list);
+//                    intent.putExtra("path_folder", ref.getPathFolder());
+//                    intent.putExtra("name", ref.getName());
+//                    intent.putExtra("ok", 1);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
+
         }
-
-
         private void bindData(Album ref) {
             txtName_album.setText(ref.getName());
-            txtCount_item_album.setText(String.valueOf(ref.getList().size()) + " items");
+            txtCount_item_album.setText(String.valueOf(ref.getList().size()) + " item(s)");
             Glide.with(context).load(ref.getImg().getThumb()).into(img_album);
         }
 

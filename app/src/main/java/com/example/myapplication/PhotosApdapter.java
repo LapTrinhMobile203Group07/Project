@@ -1,4 +1,4 @@
-package com.example.myapplication.Apdapter;
+package com.example.myapplication;
 
 
 import android.Manifest;
@@ -49,8 +49,8 @@ public class PhotosApdapter extends ArrayAdapter<Photos> implements onBindView {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View row = inflater.inflate(R.layout.photo, null);
         ImageView avatar = row.findViewById(R.id.avatar1);
-        Log.d("ADebugTag", " ============================================================");
-        Log.d("ADebugTag", "Value: " + items.get(position).getPath());
+//        Log.d("ADebugTag", " ============================================================");
+//        Log.d("ADebugTag", "Value: " + items.get(position).getPath());
 //        avatar.setImageBitmap(BitmapFactory.decodeFile(items.get(position).getPath()));
 //        Glide.with(getContext()).load(items.get(position).getPath()).into((ImageView) row);
 

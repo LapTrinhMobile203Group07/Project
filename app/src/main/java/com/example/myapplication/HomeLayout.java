@@ -3,6 +3,7 @@ package com.example.myapplication;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,14 +28,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 //Tai
-import com.example.myapplication.Apdapter.AlbumAdapter;
-import com.example.myapplication.Apdapter.AlbumsAdapter;
 //
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javax.xml.namespace.QName;
 
 public class HomeLayout extends Fragment implements FragmentCallbacks {
     MainActivity main;
@@ -70,9 +67,9 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
         assignViewByFindId_HomeLayout(home_layout);
         //Tai
         listImage = GetAllPhotoFromGallery.getAllImageFromGallery(this.getContext());
-        Log.d("list type", "============================================ ");
-        Log.d("list type", String.valueOf(listImage));
-        Log.d("list type", "============================================ ");
+//        Log.d("list type", "============================================ ");
+//        Log.d("list type", String.valueOf(listImage));
+//        Log.d("list type", "============================================ ");
         setViewRyc();
         albumAdapter.setData(listAlbum);
         //
@@ -162,6 +159,38 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
     @Override
     public void onMsgFromMainToFragment(String btn) {
 
+    }
+    private void addNewAlbum() {
+        View addNewAlbumForm = LayoutInflater.from(context).inflate(R.layout.add_album_form, null);
+        EditText edtAlbumName = addNewAlbumForm.findViewById(R.id.edtAlbumName);
+
+        AlertDialog.Builder addDialog = new AlertDialog.Builder(context, R.style.AlertDialog);
+        addDialog.setView(addNewAlbumForm);
+        addDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String newAlbumName = edtAlbumName.getText().toString();
+                if (newAlbumName.length() != 0) {
+                    if (AlbumUtility.getInstance(context).addNewAlbum(newAlbumName)) {
+                        albumsAdapter.addAlbum(newAlbumName);
+                        Toast.makeText(context, "New album created successfully!", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(context, "Error: Failed to create new album!", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(context, "Empty Album Name!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        addDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(context, "Canceled!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        addDialog.create();
+        addDialog.show();
     }
 
     public void Opendialog(){

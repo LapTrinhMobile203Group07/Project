@@ -22,8 +22,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.myapplication.Apdapter.PhotosApdapter;
-
 import java.util.ArrayList;
 
 public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
@@ -143,7 +141,7 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
                 dataVideo = cur1.getString(videoColumn);
                 // Do something with the values.
 //                Log.i("ListingImages", " Data=" + dataImage);
-                Log.i("ListingImages", " Data=" + dataVideo);
+//                Log.i("ListingImages", " Data=" + dataVideo);
                 arrayList.add(new Photos(dataVideo));
             } while (cur1.moveToNext());
 
@@ -157,15 +155,15 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
                 // Get the field values
                 dataImage = cur.getString(dataColumn);
                 // Do something with the values.
-                Log.e("ListingImages", " Data path Image=" + dataImage);
+//                Log.e("ListingImages", " Data path Image=" + dataImage);
 //                arrayList.add(new Photos(dataImage));
                 arrayList.add(new Photos(dataImage));
 //                Log.i("ListingImages", " Data=" + dataVideo);
             } while (cur.moveToNext());
 
         }
-        Log.e("ADebugTag", "============================================================");
-        Log.e("ListImage", "arrayList " + arrayList);
+//        Log.e("ADebugTag", "============================================================");
+//        Log.e("ListImage", "arrayList " + arrayList);
         // oke
 
         PhotosApdapter adapter = new PhotosApdapter(getContext(), R.layout.photo, arrayList);

@@ -24,6 +24,15 @@
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
     </style>
+    <style name="Back" parent="@android:style/Widget.Button">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@drawable/back</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
 
 
     <style name="my_album">
