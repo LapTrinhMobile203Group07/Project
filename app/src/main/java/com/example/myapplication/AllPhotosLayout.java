@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,6 +96,8 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
             @Override
             public void onClick(View view) {
                 // Do something
+                Intent intent = new Intent(main.context, SlideShow.class);
+                startActivity(intent);
             }
         });
 
