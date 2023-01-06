@@ -84,7 +84,7 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
         btnSeeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                main.onMsgFromFragToMain("Home_Layout", "All_Album_Layout");
+                main.onMsgFromFragToMain("Home_Layout", "ALBUM-FLAG");
             }
         });
         return home_layout;

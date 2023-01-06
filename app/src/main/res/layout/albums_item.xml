@@ -13,7 +13,7 @@
         app:cardCornerRadius="12dp"
         android:layout_centerInParent="true"
         app:strokeColor="@color/blue"
-        app:strokeWidth="3dp">
+        app:strokeWidth="1dp">
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -22,9 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
+
         <activity
             android:requestLegacyExternalStorage="true"
-            android:name=".AllAlbumLayout"
+            android:name=".AlbumsFragment"
             android:exported="false">
             <meta-data
                 android:requestLegacyExternalStorage="true"
@@ -70,7 +71,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name="com.example.myapplication.FragmentActivity" />
     </application>
 
 </manifest>

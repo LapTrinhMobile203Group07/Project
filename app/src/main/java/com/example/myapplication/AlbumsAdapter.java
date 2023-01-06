@@ -98,7 +98,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
             albumItemCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((MainActivity)itemView.getContext()).onMsgFromFragToMain("ALBUM-FLAG",
+                    ((MainActivity)itemView.getContext()).onMsgFromFragToMain("Home_Layout",
                             albums.get(getAdapterPosition()));
                 }
             });

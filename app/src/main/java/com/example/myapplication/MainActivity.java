@@ -63,9 +63,8 @@ public class MainActivity extends FragmentActivity implements MainCallbacks{
                         Manifest.permission.CAMERA}, 1);
         setContentView(R.layout.activity_main);
         ft = getSupportFragmentManager().beginTransaction();
-        homeLayout = HomeLayout.newInstance();
-        ft.replace(R.id.mainFrag_holder, homeLayout);
-
+        albumsFragment= AlbumsFragment.getInstance(MainActivity.this);
+        ft.replace(R.id.mainFrag_holder, albumsFragment);
 
         ft.commit();
 
@@ -100,15 +99,15 @@ public class MainActivity extends FragmentActivity implements MainCallbacks{
 
             else if (btn.equals("Home_Layout")){
                 ft = getSupportFragmentManager().beginTransaction();
-                homeLayout = HomeLayout.newInstance();
-                ft.replace(R.id.mainFrag_holder, homeLayout);
+                albumsFragment= AlbumsFragment.getInstance(MainActivity.this);
+                ft.replace(R.id.mainFrag_holder, albumsFragment);
                 ft.commit();
             }
-//            else if (btn.equals("FOLDER-FLAG")){
+//            else if (btn.equals("ALBUM-FLAG")){
 //                ft = getSupportFragmentManager().beginTransaction();
-//                picturesFragment = PicturesFragment.getInstance(foldersFragment.getContext(), btn, "FOLDER");
-//                selectedFragment = picturesFragment;
-//                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrag_holder, selectedFragment).commit();
+//                albumsFragment= AlbumsFragment.getInstance(MainActivity.this);
+//                ft.replace(R.id.mainFrag_holder, albumsFragment);
+//                ft.commit();
 //            }
 
 
@@ -119,28 +118,20 @@ public class MainActivity extends FragmentActivity implements MainCallbacks{
                 ft.commit();
             }
         }
-        if (sender.equals("Home_Layout")){
-            if (btn.equals("All_Album_Layout")){
-                ft = getSupportFragmentManager().beginTransaction();
-//                AllAlbumLayout allAlbumLayout;
-                albumsFragment= AlbumsFragment.getInstance(MainActivity.this);
-                ft.replace(R.id.mainFrag_holder, albumsFragment);
-                ft.commit();
-            }
-        }
-        if (sender.equals("ALBUM-FLAG")) {
-            try {
-//                ft = getSupportFragmentManager().beginTransaction();
-//                picturesFragment = PicturesFragment.getInstance(picturesFragment.getContext(), btn, "ALBUM");
-//                ft.replace(R.id.mainFrag_holder, picturesFragment);
-//                ft.commit();
-//
-                picturesFragment = PicturesFragment.getInstance(albumsFragment.getContext(), btn, "ALBUM");
-                selectedFragment = picturesFragment;
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrag_holder, selectedFragment).commit();
-            } catch (Exception e) {
-                Toast.makeText(MainActivity.this, "Can't call picture fragment!", Toast.LENGTH_SHORT).show();
-            }
+            if (sender.equals("Home_Layout")) {
+                try {
+                    if (btn.equals("Trashed")) {
+                        trashedFragment = TrashedFragment.getInstance(albumsFragment.getContext());
+                        selectedFragment = trashedFragment;
+                    }  else{
+                        Log.d("Tag", "Albums FLAG ");
+                        picturesFragment = PicturesFragment.getInstance(albumsFragment.getContext(), btn, "ALBUM");
+                        selectedFragment = picturesFragment;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrag_holder, selectedFragment).commit();
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Can't call picture fragment!", Toast.LENGTH_SHORT).show();
+                }
         }
 
     }

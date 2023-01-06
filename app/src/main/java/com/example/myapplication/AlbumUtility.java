@@ -2,65 +2,35 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import androidx.annotation.NonNull;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class AlbumUtility {
     private SharedPreferences sharedPreferences;
     private static AlbumUtility instance;
     private static final String ALL_ALBUM_KEY = "album_list";
     private static final String ALL_ALBUM_DATA_KEY = "album_data";
-    private List<Album> listAlbum;
-    private List<MyImage> listImage;
-    public Context context;
-
 
     private AlbumUtility(Context context) {
         sharedPreferences = context.getSharedPreferences("albums_database", Context.MODE_PRIVATE);
-
         if (getAllAlbums() == null) {
             initAlbums();
         }
         if (getAllAlbumData() == null) {
             initAlbumData();
         }
-
-
     }
-
-
-    //list
-    @NonNull
-    public List<Album> getListAlbum(List<MyImage> listImage) {
-        List<String> ref = new ArrayList<>();
-        List<Album> listAlbum = new ArrayList<>();
-
-        for (int i = 0; i < listImage.size(); i++) {
-            String[] _array = listImage.get(i).getThumb().split("/");
-            String _pathFolder = listImage.get(i).getThumb().substring(0, listImage.get(i).getThumb().lastIndexOf("/"));
-            String _name = _array[_array.length - 2];
-            if (!ref.contains(_pathFolder)) {
-                ref.add(_pathFolder);
-                Album token = new Album(listImage.get(i), _name);
-                token.setPathFolder(_pathFolder);
-                token.addItem(listImage.get(i));
-                listAlbum.add(token);
-            } else {
-                listAlbum.get(ref.indexOf(_pathFolder)).addItem(listImage.get(i));
-            }
-        }
-        return listAlbum;
-    }//Get List Album
-
 
     public static AlbumUtility getInstance(Context context) {
         if (null == instance)
@@ -109,19 +79,22 @@ public class AlbumUtility {
 
     private void initAlbums() {
         ArrayList<String> albums = new ArrayList<String>();
-        listAlbum = getListAlbum(listImage);
-        albums.add(  String.valueOf(listAlbum.indexOf(0)));
+        albums.add("Favorite");
+        albums.add("Trashed");
 
+        albums.add("Holiday");
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         editor.putString(ALL_ALBUM_KEY, gson.toJson(albums));
         editor.apply();
     }
 
+
     private void initAlbumData() {
         ArrayList<AlbumData> albumData = new ArrayList<AlbumData>();
-        listImage = GetAllPhotoFromGallery.getAllImageFromGallery(context);
-        albumData.add(new AlbumData(String.valueOf(listAlbum.indexOf(0)), new ArrayList<String>()));
+        albumData.add(new AlbumData("Favorite", new ArrayList<String>()));
+        albumData.add(new AlbumData("Trashed", new ArrayList<String>()));
+        albumData.add(new AlbumData("Holiday", new ArrayList<String>()));
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         editor.putString(ALL_ALBUM_DATA_KEY, gson.toJson(albumData));
@@ -152,7 +125,7 @@ public class AlbumUtility {
                     while (iter.hasNext()) {
                         AlbumData adata = iter.next();
                         if (adata.getAlbumName().equals(selectedAlbum.getAlbumName())) {
-                           iter.remove();
+                            iter.remove();
                         }
                     }
                     data.add(selectedAlbum);
@@ -266,13 +239,13 @@ public class AlbumUtility {
             // Add it to the data
             // TODO:
             data.removeIf(d -> d.getAlbumName().equals(albumName));
-            Iterator<AlbumData> iter = data.iterator();
+            /*Iterator<AlbumData> iter = data.iterator();
             while (iter.hasNext()) {
                 AlbumData element = iter.next();
                 if (element.getAlbumName().equals(albumName)) {
                     iter.remove();
                 }
-            }
+            }*/
 
             data.add(albumData);
             setAllAlbumData(data);
@@ -291,7 +264,7 @@ public class AlbumUtility {
                 while (iter.hasNext()) {
                     String path = iter.next();
                     if (path.equals(picturePath)) {
-                       iter.remove();
+                        iter.remove();
                     }
                 }
                 //paths.removeIf(path -> path.equals(picturePath));

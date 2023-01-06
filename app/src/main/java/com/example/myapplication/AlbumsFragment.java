@@ -1,20 +1,17 @@
 package com.example.myapplication;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -32,7 +29,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class AlbumsFragment extends Fragment {
-    private FloatingActionButton btnAdd;
+//    private FloatingActionButton btnAdd;
+    private Button btnAdd;
     private RecyclerView albumRecView;
     private AlbumsAdapter albumsAdapter;
 
@@ -66,7 +64,7 @@ public class AlbumsFragment extends Fragment {
                 iter.remove();
             }
         }
-
+//
 //        ((MainActivity)context).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 //        ((MainActivity)context).getSupportActionBar().setTitle("Gallery");
 //        ((MainActivity)context).getSupportActionBar().setDisplayUseLogoEnabled(true);
@@ -82,7 +80,7 @@ public class AlbumsFragment extends Fragment {
         albumsAdapter = new AlbumsAdapter(context, albums);
         albumRecView.setAdapter(albumsAdapter);
         albumRecView.setLayoutManager(new LinearLayoutManager(albumsFragment.getContext()));
-        btnAdd = (FloatingActionButton) albumsFragment.findViewById(R.id.btnAdd_AlbumsFragment);
+        btnAdd =  albumsFragment.findViewById(R.id.btnGo);
         Log.d("List","Albums fragment");
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,14 +95,14 @@ public class AlbumsFragment extends Fragment {
         albumFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)context).onMsgFromFragToMain("ALBUM-FLAG", "Favorite");
+                ((MainActivity)context).onMsgFromFragToMain("Home_Layout", "Favorite");
                 Toast.makeText(context, "Favorite", Toast.LENGTH_SHORT).show();
             }
         });
         albumTrashed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)context).onMsgFromFragToMain("ALBUM-FLAG", "Trashed");
+                ((MainActivity)context).onMsgFromFragToMain("Home_Layout", "Trashed");
                 Toast.makeText(context, "Trashed", Toast.LENGTH_SHORT).show();
             }
         });
@@ -115,13 +113,6 @@ public class AlbumsFragment extends Fragment {
     private void addNewAlbum() {
         View addNewAlbumForm = LayoutInflater.from(context).inflate(R.layout.add_album_form, null);
         EditText edtAlbumName = addNewAlbumForm.findViewById(R.id.edtAlbumName);
-
-
-        Dialog dialog = new Dialog(this.getContext());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(R.layout.dialog_home_layout);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         AlertDialog.Builder addDialog = new AlertDialog.Builder(context, R.style.AlertDialog);
         addDialog.setView(addNewAlbumForm);
