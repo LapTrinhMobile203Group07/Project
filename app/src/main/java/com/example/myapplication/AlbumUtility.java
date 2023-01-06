@@ -82,19 +82,17 @@ public class AlbumUtility {
         albums.add("Favorite");
         albums.add("Trashed");
 
-        albums.add("Holiday");
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         editor.putString(ALL_ALBUM_KEY, gson.toJson(albums));
         editor.apply();
     }
 
-
     private void initAlbumData() {
         ArrayList<AlbumData> albumData = new ArrayList<AlbumData>();
         albumData.add(new AlbumData("Favorite", new ArrayList<String>()));
         albumData.add(new AlbumData("Trashed", new ArrayList<String>()));
-        albumData.add(new AlbumData("Holiday", new ArrayList<String>()));
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         editor.putString(ALL_ALBUM_DATA_KEY, gson.toJson(albumData));

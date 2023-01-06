@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class FoldersFragment extends Fragment {
     Context context;
@@ -34,16 +36,16 @@ public class FoldersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View foldersFragment = inflater.inflate(R.layout.folder_picture_fragment, container, false);
 
-//        ((MainActivity)context).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//        ((MainActivity)context).getSupportActionBar().setTitle("Gallery");
-//        ((MainActivity)context).getSupportActionBar().setDisplayUseLogoEnabled(true);
-//        ((MainActivity)context).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((MainActivity)context).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((MainActivity)context).getSupportActionBar().setTitle("Gallery");
+        ((MainActivity)context).getSupportActionBar().setDisplayUseLogoEnabled(true);
+        ((MainActivity)context).getSupportActionBar().setDisplayShowHomeEnabled(true);
         Log.d("List","Folder fragment");
         folderPicturesRecView = (RecyclerView) foldersFragment.findViewById(R.id.folderPicturesRecView);
         folderPaths = new ArrayList<String>();
 
         readFolders();
-        
+
         return foldersFragment;
     }
 
@@ -88,7 +90,7 @@ public class FoldersFragment extends Fragment {
 
         loadFolders();
     }
-    
+
     private void loadFolders() {
         FolderAdapter folderAdapter = new FolderAdapter(context, folderPaths);
         folderPicturesRecView.setAdapter(folderAdapter);

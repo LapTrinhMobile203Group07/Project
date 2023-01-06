@@ -61,7 +61,7 @@ public class FooterLayout extends Fragment implements FragmentCallbacks {
             @Override
             public void onClick(View view) {
                 defaultState(position);
-                main.onMsgFromFragToMain("Footer_Layout", "Home_Layout");
+                main.onMsgFromFragToMain("Footer_Layout", "ALBUM-FLAG");
                 selectState(btnAlbums);
             }
         });

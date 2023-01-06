@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -30,6 +31,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 
+import androidx.constraintlayout.core.widgets.Helper;
 import androidx.core.content.FileProvider;
 
 import androidx.fragment.app.Fragment;
@@ -41,13 +43,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Locale;
 
 
 
-public class PicturesFragment extends Fragment implements FragmentCallbacks{
+public class AllPhotosLayout1 extends Fragment implements FragmentCallbacks{
     private RecyclerView picturesRecView;
     private File[] allFiles;
     private File[] pictureFiles;
@@ -77,15 +80,23 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
     private final int CAMERA_CAPTURED = 100;
     MainActivity main;
 
-    public static PicturesFragment getInstance(Context context, String pathFolder, String type) {
-        return new PicturesFragment(context, pathFolder, type);
-    }
+//    public static AllPhotosLayout1 getInstance(Context context, String pathFolder, String type) {
+//        return new AllPhotosLayout1(context, pathFolder, type);
+//    }
+//    public static AllPhotosLayout1 newInstance(Context context, String pathFolder, String type){
+//        AllPhotosLayout1 fragment = new AllPhotosLayout1(context,pathFolder,type);
+//        return fragment;
+//    }
+//    AllPhotosLayout1(Context context, String pathFolder, String type) {
+//        this.context = context;
+//        this.pathFolder = pathFolder;
+//        this.type = type;
+//    }
+public static AllPhotosLayout1 newInstance() {
+    AllPhotosLayout1 fragment = new AllPhotosLayout1();
+    return fragment;
+}
 
-    PicturesFragment(Context context, String pathFolder, String type) {
-        this.context = context;
-        this.pathFolder = pathFolder;
-        this.type = type;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,43 +107,49 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
         catch (IllegalStateException e) {
             throw new IllegalStateException("MainActivity must implement callbacks");
         }
-
+        Log.d("getinsight", "pictures fragment");
         // Show the up-key back arrow and name folder on Action Bar
         setHasOptionsMenu(true);
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((MainActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayUseLogoEnabled(false);
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
+//        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        ((MainActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+//        ((MainActivity) getActivity()).getSupportActionBar().setDisplayUseLogoEnabled(false);
+//        ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
 
-        int getPositionStartName = pathFolder.lastIndexOf("/");
-        String nameFolder = pathFolder.substring(getPositionStartName + 1);
-        ((MainActivity) getActivity()).getSupportActionBar().setTitle(nameFolder);
+//        int getPositionStartName = pathFolder.lastIndexOf("/");
+//        String nameFolder = pathFolder.substring(getPositionStartName + 1);
+//        ((MainActivity) getActivity()).getSupportActionBar().setTitle(nameFolder);
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View picturesFragment = inflater.inflate(R.layout.pictures_fragment, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View picturesFragment = inflater.inflate(R.layout.pictures_fragment, null);
 
         picturesRecView = picturesFragment.findViewById(R.id.picturesRecView);
 
-        btnAdd = (FloatingActionButton) picturesFragment.findViewById(R.id.btnAdd_PicturesFragment);
-        btnCamera = (FloatingActionButton) picturesFragment.findViewById(R.id.btnCamera_PicturesFragment);
-        btnUrl = (FloatingActionButton) picturesFragment.findViewById(R.id.btnUrl_PicturesFragment);
+//        btnAdd = (FloatingActionButton) picturesFragment.findViewById(R.id.btnAdd_PicturesFragment);
+//        btnCamera = (FloatingActionButton) picturesFragment.findViewById(R.id.btnCamera_PicturesFragment);
+//        btnUrl = (FloatingActionButton) picturesFragment.findViewById(R.id.btnUrl_PicturesFragment);;
+
+//        readPicturesInAlbum();
+        getImages();
+        Log.d("AllPhotosLayout", paths.toString());
+        showAllPictures(paths);
+
         if (type.equals("ALBUM")) btnAdd.setVisibility(View.GONE);
 
-//        menuFABShow = AnimationUtils.loadAnimation(context, R.anim.menu_button_show);
-//        menuFABHide = AnimationUtils.loadAnimation(picturesFragment.getContext(), R.anim.menu_bottom_hide);
-
-        addIsPressed = false;
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setAnimationButton(addIsPressed);
-                setVisibilityButton(addIsPressed);
-                addIsPressed = !addIsPressed;
-            }
-        });
+        menuFABShow = AnimationUtils.loadAnimation(context, R.anim.menu_button_show);
+        menuFABHide = AnimationUtils.loadAnimation(picturesFragment.getContext(), R.anim.menu_bottom_hide);
+//        showAllPictures(paths);
+//        addIsPressed = false;
+//        btnAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setAnimationButton(addIsPressed);
+//                setVisibilityButton(addIsPressed);
+//                addIsPressed = !addIsPressed;
+//            }
+//        });
 
         picturesRecView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -153,52 +170,76 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
             }
         });
 
-        btnCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCamera();
-            }
-        });
-
-        btnUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                main.onMsgFromFragToMain("PICTURES-FLAG", "Open Url Dialog");
-            }
-        });
-
-        if (type.equals("FOLDER")) {
-            readPicturesInFolder();
-        }
-        if (type.equals("ALBUM")) {
-            readPicturesInAlbum();
-        }
+//        btnCamera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                openCamera();
+//            }
+//        });
+//
+//        btnUrl.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                main.onMsgFromFragToMain("PICTURES-FLAG", "Open Url Dialog");
+//            }
+//        });
+//
+//        if (type.equals("FOLDER")) {
+//            readPicturesInFolder();
+//        }
+//        if (type.equals("ALBUM")) {
+//            readPicturesInAlbum();
+//        }
         implementClickListener();
         return picturesFragment;
-    }
+    }// On Create View
 
-    void readPicturesInFolder() {
-        try {
-            File pictureFile = new File(pathFolder);
-            FilenameFilter filter = new FilenameFilter() {
-                @Override
-                public boolean accept(File file, String s) {
-                    return !s.toLowerCase(Locale.ROOT).startsWith(".trashed") &&
-                            !s.toLowerCase(Locale.ROOT).startsWith(".hide") &&
-                            (s.toLowerCase().endsWith("png") || s.toLowerCase(Locale.ROOT).endsWith("jpg"));
-                }
-            };
-            allFiles = pictureFile.listFiles();
-            pictureFiles = pictureFile.listFiles(filter);
-            paths = new ArrayList<String>();
-            for (File file : pictureFiles)
-                paths.add(file.getAbsolutePath());
-            showAllPictures(paths);
+    private void getImages() {
+        paths.clear();
+        //Use Image uri
+        String[] projection = new String[]{
+                MediaStore.Images.Media.DATA,
+        };
+        Uri images = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        Uri videos = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+        // Make the query.
+        Cursor cur = getContext().getContentResolver().query(images,
+                projection, // Which columns to return
+                null,       // Which rows to return (all rows)
+                null,       // Selection arguments (none)
+                null        // Ordering
+        );
+        Cursor cur1 = getContext().getContentResolver().query(videos,
+                projection, // Which columns to return
+                null,       // Which rows to return (all rows)
+                null,       // Selection arguments (none)
+                null        // Ordering
+        );
+
+        Log.i("ListingImages", " query count=" + cur);
+        //Images
+        if (cur.moveToFirst()) {
+            String dataImage;
+            int dataColumn = cur.getColumnIndex(
+                    MediaStore.Images.Media.DATA);
+            do {
+                // Get the field values
+                dataImage = cur.getString(dataColumn);
+                // Do something with the values.
+//                Log.e("ListingImages", " Data path Image=" + dataImage);
+//                arrayList.add(new Photos(dataImage));
+                paths.add(dataImage);
+//                Log.i("ListingImages", " Data=" + dataVideo);
+            } while (cur.moveToNext());
+
         }
-        catch (Exception e) {
-            Log.e("Error", e.getMessage());
-        }
-    }
+//        Log.e("ADebugTag", "============================================================");
+//        Log.e("ListImage", "arrayList " + arrayList);
+        // oke
+
+    } //GetImages
+
+
 
     void readPicturesInAlbum() {
         AlbumData data = AlbumUtility.getInstance(context).findDataByAlbumName(pathFolder);
@@ -217,9 +258,7 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
     }
 
     void showAllPictures(ArrayList<String> paths) {
-        // Send a string path to the adapter. The adapter will create everything from the provided path
-        // This implementation is not permanent
-        // Update on Nov 29, 2021: send a list of paths to the adapter to utilize this fragment for albums
+
         picturesAdapter = new PicturesAdapter(context, paths, spanCount);
         picturesRecView.setAdapter(picturesAdapter);
         picturesRecView.setLayoutManager(new GridLayoutManager(context, spanCount));
@@ -249,16 +288,6 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
         }
     }
 
-    void openCamera() {
-        try {
-            Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            getActivity().startActivityFromFragment(this, takePhotoIntent, CAMERA_CAPTURED);
-        }
-        catch (Exception e) {
-            Log.e("Error to open camera! ", e.getMessage());
-        }
-    }
-
     private File getFolderDirectory() {
         File pictureDirectory = new File(pathFolder);
         if (!pictureDirectory.exists())
@@ -266,47 +295,30 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
         return pictureDirectory;
     }
 
-    void saveImage(Bitmap bitmap) {
-        File pictureFile = new File(getFolderDirectory(), bitmap.toString() + ".jpg");
-        FileOutputStream output = null;
-        try {
-            output = new FileOutputStream(pictureFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
-            output.flush();
-            output.close();
-        } catch (Exception e) {
-            Log.e("Error to save image! ", e.getMessage());
-        }
-        readPicturesInFolder();
-    }
+//    void saveImage(Bitmap bitmap) {
+//        File pictureFile = new File(getFolderDirectory(), bitmap.toString() + ".jpg");
+//        FileOutputStream output = null;
+//        try {
+//            output = new FileOutputStream(pictureFile);
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+//            output.flush();
+//            output.close();
+//        } catch (Exception e) {
+//            Log.e("Error to save image! ", e.getMessage());
+//        }
+//        readPicturesInFolder();
+//    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == CAMERA_CAPTURED) {
-                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                saveImage(bitmap);
-            }
-        }
-    }
+
 
     @Override
     public void onResume() {
         super.onResume();
         // Update pictures view when LargeImage activity is finished
-        if (type.equals("FOLDER")) {
-            readPicturesInFolder();
-        }
         if (type.equals("ALBUM")) {
             readPicturesInAlbum();
         }
     }
-
-//    @Override
-//    public void onMsgFromMainToFrag(Bitmap result) {
-//        saveImage(result);
-//    }
     @Override
     public void onMsgFromMainToFragment(String btn) {
 
@@ -371,24 +383,25 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
             SortHelper.sort(pictureFiles, sortCriteria, sortType);
             reupdateFilePaths();
         }
-        else if (R.id.btnSlideshow == id )
-        {
-            if(paths.size() == 0)
-            {
-                Toast.makeText(context, "Nothing to slide show", Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
+//        else if (R.id.btnSlideshow == id )
+//        {
+//            if(paths.size() == 0)
+//            {
+//                Toast.makeText(context, "Nothing to slide show", Toast.LENGTH_SHORT).show();
+//            }
+//            else
+//            {
 //                int getPositionStartName = pathFolder.lastIndexOf("/");
 //                String nameFolder = pathFolder.substring(getPositionStartName + 1);
 //                Intent intent = new Intent(context, SlideShowActivity.class);
 //                intent.putExtra("Path to Image Files", paths);
 //                intent.putExtra("Name Folder", nameFolder);
 //                context.startActivity(intent);
-            }
-        } else {
+//            }
+//        }
+//
+        else {
             String request = "";
-            if (type.equals("FOLDER")) request = "Turn back folder";
             if (type.equals("ALBUM")) request = "Turn back album";
             main.onMsgFromFragToMain("PICTURES-FLAG", request);
         }
@@ -422,11 +435,11 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
         boolean hasCheckedItems = picturesAdapter.getSelectedCount() > 0;
         // there are some selected items, start the actionMode
         if (hasCheckedItems && actionMode == null) {
-            actionMode = ((AppCompatActivity) getActivity()).
-                    startSupportActionMode(new ToolbarActionModeCallback(context, picturesAdapter, type));
+//            actionMode = ((AppCompatActivity) getActivity()).
+//                    startSupportActionMode(new ToolbarActionModeCallback(context, picturesAdapter, type));
         } else if (!hasCheckedItems && actionMode != null) {
             // there no selected items, finish the actionMode
-//            actionMode.finish();
+            actionMode.finish();
         }
 
         if (actionMode != null)
@@ -440,17 +453,6 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
             actionMode = null;
     }
 
-    private void showLargePicture(String pathToPicturesFolder, int itemPosition) {
-        Intent intent = new Intent(context, LargeImage.class);
-        // Send the folder path and the current position to the destination activity
-        intent.putExtra("pathToPicturesFolder", pathToPicturesFolder);
-        intent.putExtra("itemPosition", itemPosition);
-        intent.putExtra("itemType", type);
-        // Toast.makeText(context, "Position: " + itemPosition, Toast.LENGTH_SHORT).show();
-        context.startActivity(intent);
-    }
-
-    // Delete multiple Images in PicturesFragments
     public void deleteMulti() {
         //Get selected ids
         SparseBooleanArray selected = picturesAdapter.getSelectedIds();
@@ -485,7 +487,7 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
                         }
                         Toast.makeText(context,"Picture(s) Deleted On Device",Toast.LENGTH_SHORT).show();
                     }
-//                    actionMode.finish();
+                    actionMode.finish();
                     onResume();
                 }
             });
@@ -509,7 +511,7 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
                     }
 
                     Toast.makeText(context, "Pictures(s) removed from album", Toast.LENGTH_SHORT).show();
-//                    actionMode.finish();
+                    actionMode.finish();
                     onResume();
                 }
             });
@@ -546,7 +548,7 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
                     callScanIntent(context,path);
                 }
                 Toast.makeText(context,"Picture(s) is hidden",Toast.LENGTH_SHORT).show();
-//                actionMode.finish();
+                actionMode.finish();
                 onResume();
             }
         });
@@ -593,7 +595,7 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        actionMode.finish();
+        actionMode.finish();
     }
 
     // Select all pictures
@@ -624,7 +626,7 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
         Iterator<String> iter = albums.iterator();
         while (iter.hasNext()) {
             String album = iter.next();
-            if (album.equals("Favorite")||album.equals("Trashed")) {
+            if (album.equals("Favorite")||album.equals("Trashed")||album.equals("Hide")) {
                 iter.remove();
             }
         }
@@ -651,7 +653,7 @@ public class PicturesFragment extends Fragment implements FragmentCallbacks{
                         AlbumUtility.getInstance(context).addPictureToAlbum(s, path);
                     }
                 }
-//                actionMode.finish();
+                actionMode.finish();
                 Toast.makeText(context, "Added to selected albums", Toast.LENGTH_SHORT).show();
             }
         });

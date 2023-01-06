@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,23 +64,23 @@ public class AlbumsFragment extends Fragment {
             }
         }
 //
-//        ((MainActivity)context).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//        ((MainActivity)context).getSupportActionBar().setTitle("Gallery");
-//        ((MainActivity)context).getSupportActionBar().setDisplayUseLogoEnabled(true);
-//        ((MainActivity)context).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((MainActivity)context).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((MainActivity)context).getSupportActionBar().setTitle("Gallery");
+        ((MainActivity)context).getSupportActionBar().setDisplayUseLogoEnabled(true);
+        ((MainActivity)context).getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View albumsFragment = inflater.inflate(R.layout.albums_fragment, container, false);
-//        Log.d("getinsight", "Albums fragment");
+
         albumRecView = albumsFragment.findViewById(R.id.albumsRecView);
         albumsAdapter = new AlbumsAdapter(context, albums);
         albumRecView.setAdapter(albumsAdapter);
         albumRecView.setLayoutManager(new LinearLayoutManager(albumsFragment.getContext()));
         btnAdd =  albumsFragment.findViewById(R.id.btnGo);
-        Log.d("List","Albums fragment");
+
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

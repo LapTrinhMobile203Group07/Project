@@ -98,12 +98,12 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
             albumItemCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((MainActivity)itemView.getContext()).onMsgFromFragToMain("Home_Layout",
+                    ((MainActivity)itemView.getContext()).onMsgFromFragToMain("ALBUM-FLAG",
                             albums.get(getAdapterPosition()));
                 }
             });
         }
-        
+
         private void showAlbumPopupMenu(View itemView) {
             String currentAlbum = albums.get(getAdapterPosition());
             PopupMenu popupMenu = new PopupMenu(itemView.getContext(), itemView);

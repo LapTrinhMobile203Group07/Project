@@ -2,6 +2,7 @@ package com.example.myapplication;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -29,17 +31,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 //public class FragmentActivity extends AppCompatActivity{}
 
 
-public class MainActivity extends FragmentActivity implements MainCallbacks{
+public class MainActivity extends AppCompatActivity implements MainCallbacks{
 
     FragmentTransaction ft;
     FooterLayout footerLayout;
     SearchLayout searchLayout;
     HomeLayout homeLayout;
-    AllPhotosLayout allPhotosLayout;
+    AllPhotosLayout1 allPhotosLayout;
 //    AllAlbumLayout allAlbumLayout;
     SpecificAlbumLayout specificAlbumLayout;
     PicturesFragment picturesFragment;
@@ -51,9 +55,7 @@ public class MainActivity extends FragmentActivity implements MainCallbacks{
     public FoldersFragment foldersFragment;
 //    public FoldersFragment foldersFragment;
     public TrashedFragment trashedFragment;
-
-
-
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -62,20 +64,26 @@ public class MainActivity extends FragmentActivity implements MainCallbacks{
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.CAMERA}, 1);
         setContentView(R.layout.activity_main);
+        //Main
         ft = getSupportFragmentManager().beginTransaction();
         albumsFragment= AlbumsFragment.getInstance(MainActivity.this);
         ft.replace(R.id.mainFrag_holder, albumsFragment);
 
         ft.commit();
-
+        //Footer
         ft = getSupportFragmentManager().beginTransaction();
         footerLayout = FooterLayout.newInstance();
         ft.replace(R.id.footFrag_holder, footerLayout);
         ft.commit();
 
+
 //        foldersFragment = FoldersFragment.getInstance(MainActivity.this);
         picturesFragment = null;
         trashedFragment = null;
+        actionBar = getSupportActionBar();
+        actionBar.setIcon(R.drawable.picture);
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
 
 
         albumsFragment = AlbumsFragment.getInstance(MainActivity.this);
@@ -90,25 +98,19 @@ public class MainActivity extends FragmentActivity implements MainCallbacks{
         if (sender.equals("Footer_Layout")){
             if (btn.equals("All_Photo_Layout")){
                 ft = getSupportFragmentManager().beginTransaction();
-                allPhotosLayout = AllPhotosLayout.newInstance();
-                ft.replace(R.id.mainFrag_holder, allPhotosLayout);
+//                allPhotosLayout = foldersFragment;
+                ft.replace(R.id.mainFrag_holder,foldersFragment);
 
 
                 ft.commit();
             }
 
-            else if (btn.equals("Home_Layout")){
+            else if (btn.equals("ALBUM-FLAG")){
                 ft = getSupportFragmentManager().beginTransaction();
                 albumsFragment= AlbumsFragment.getInstance(MainActivity.this);
                 ft.replace(R.id.mainFrag_holder, albumsFragment);
                 ft.commit();
             }
-//            else if (btn.equals("ALBUM-FLAG")){
-//                ft = getSupportFragmentManager().beginTransaction();
-//                albumsFragment= AlbumsFragment.getInstance(MainActivity.this);
-//                ft.replace(R.id.mainFrag_holder, albumsFragment);
-//                ft.commit();
-//            }
 
 
             else if (btn.equals("Search_Layout")){
@@ -118,7 +120,7 @@ public class MainActivity extends FragmentActivity implements MainCallbacks{
                 ft.commit();
             }
         }
-            if (sender.equals("Home_Layout")) {
+            if (sender.equals("ALBUM-FLAG")) {
                 try {
                     if (btn.equals("Trashed")) {
                         trashedFragment = TrashedFragment.getInstance(albumsFragment.getContext());
@@ -133,7 +135,37 @@ public class MainActivity extends FragmentActivity implements MainCallbacks{
                     Toast.makeText(MainActivity.this, "Can't call picture fragment!", Toast.LENGTH_SHORT).show();
                 }
         }
+        if (sender.equals("FOLDER-FLAG")) {
+            try {
+                Log.d("Tag", "FOLDER FLAG ");
+                picturesFragment = PicturesFragment.getInstance(foldersFragment.getContext(), btn, "FOLDER");
+                selectedFragment = picturesFragment;
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrag_holder, selectedFragment).commit();
+            }
+            catch (Exception e) {
+                Toast.makeText(MainActivity.this, "Can't call picture fragment!", Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (sender.equals("PICTURES-FLAG")) {
+//                if (btn.contains("Open Url Dialog"))
+//                    new UrlDialogFragment().show(getSupportFragmentManager(), UrlDialogFragment.Tag);
+//                else
+            if (btn.contains("Turn back folder")) {
+                selectedFragment = foldersFragment;
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrag_holder, selectedFragment).commit();
+            } else if (btn.contains("Turn back album")) {
+                selectedFragment = albumsFragment;
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrag_holder, selectedFragment).commit();
+            }
+        }
 
+
+
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 
