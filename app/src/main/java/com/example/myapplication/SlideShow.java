@@ -4,11 +4,13 @@ package com.example.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
@@ -30,6 +32,7 @@ public class SlideShow extends Activity {
     ss_ImageAdapter imageAdapter;
     CircleIndicator circleIndicator;
     Intent intentCallMusicService;
+    MediaPlayer player;
 
     private  List<Photos> dataForSlideShow;
     private Timer timer;
@@ -51,11 +54,11 @@ public class SlideShow extends Activity {
                 circleIndicator.getDataSetObserver()
         );
 
-        intentCallMusicService = new Intent(
-                this, MusicService.class
+        player = MediaPlayer.create(
+                getApplicationContext(),
+                R.raw.wav_88_bpm_ab_maj
         );
-
-        startService(intentCallMusicService);
+        player.start();
 
         autoSlideImages();
     }
@@ -74,6 +77,10 @@ public class SlideShow extends Activity {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
+                            if (!player.isPlaying())
+                            {
+                                finish();
+                            }
                             int currentItem = viewPager.getCurrentItem();
                             int totalItem = dataForSlideShow.size();
 
@@ -112,6 +119,10 @@ public class SlideShow extends Activity {
         {
             timer.cancel();
             timer = null;
+
+            player.stop();
+            player.release();
+            player = null;
         }
     }
 

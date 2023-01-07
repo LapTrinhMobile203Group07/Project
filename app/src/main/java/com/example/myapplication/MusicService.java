@@ -18,13 +18,14 @@ public class MusicService extends Service {
 
     @Override
     public void onCreate() {
-         Toast.makeText(this, "SlideShow", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "SlideShow", Toast.LENGTH_LONG).show();
         Log.e("MusicService", "onCreate");
         boolIsServiceCreated = true;
         player = MediaPlayer.create(
                 getApplicationContext(),
-                R.raw.kamen_rider_ooo_sympathetic_hina
+                R.raw.kamen_rider_ooo
         );
+        player.start();
     }
 
     @Override
