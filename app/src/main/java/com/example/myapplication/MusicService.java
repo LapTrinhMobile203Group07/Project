@@ -18,7 +18,7 @@ public class MusicService extends Service {
 
     @Override
     public void onCreate() {
-        // Toast.makeText(this, "MyService4 Created", Toast.LENGTH_LONG).show();
+         Toast.makeText(this, "SlideShow", Toast.LENGTH_LONG).show();
         Log.e("MusicService", "onCreate");
         boolIsServiceCreated = true;
         player = MediaPlayer.create(

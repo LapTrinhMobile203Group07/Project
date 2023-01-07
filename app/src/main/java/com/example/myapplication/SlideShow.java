@@ -47,7 +47,9 @@ public class SlideShow extends Activity {
         viewPager.setAdapter(imageAdapter);
 
         circleIndicator.setViewPager(viewPager);
-        imageAdapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
+        imageAdapter.registerDataSetObserver(
+                circleIndicator.getDataSetObserver()
+        );
 
         intentCallMusicService = new Intent(
                 this, MusicService.class
