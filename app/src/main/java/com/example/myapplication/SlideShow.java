@@ -22,8 +22,10 @@ import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ThreadLocalRandom;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -54,9 +56,15 @@ public class SlideShow extends Activity {
                 circleIndicator.getDataSetObserver()
         );
 
+        int i = 0;
+        i = ThreadLocalRandom.current().nextInt(10);
         player = MediaPlayer.create(
                 getApplicationContext(),
-                R.raw.wav_88_bpm_ab_maj
+                (
+                        i % 2 == 0
+                        ? R.raw.wav_88_bpm_ab_maj
+                                : R.raw.kamen_rider_ooo
+                )
         );
         player.start();
 
