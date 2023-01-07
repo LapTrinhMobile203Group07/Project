@@ -16,9 +16,9 @@ import java.util.List;
 
 public class ss_ImageAdapter extends PagerAdapter {
     private Context context;
-    private List<ss_ImageData> photoList;
+    private List<Photos> photoList;
 
-    public ss_ImageAdapter(Context context, List<ss_ImageData> images)
+    public ss_ImageAdapter(Context context, List<Photos> images)
     {
         this.context = context;
         this.photoList = images;
@@ -31,10 +31,10 @@ public class ss_ImageAdapter extends PagerAdapter {
                 .inflate(R.layout.ss_item_slide_show, container, false);
 
         ImageView imageView = view.findViewById(R.id.slide_show_item);
-        ss_ImageData image = photoList.get(position);
+        Photos image = photoList.get(position);
         if (image != null)
         {
-            Glide.with(context).load(image.tempId).into(imageView);
+            Glide.with(context).load(image.path).into(imageView);
         }
 
         container.addView(view);

@@ -3,6 +3,7 @@
 package com.example.myapplication;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -28,8 +29,9 @@ public class SlideShow extends Activity {
     ViewPager viewPager;
     ss_ImageAdapter imageAdapter;
     CircleIndicator circleIndicator;
+    Intent intentCallMusicService;
 
-    private  List<ss_ImageData> dataForSlideShow;
+    private  List<Photos> dataForSlideShow;
     private Timer timer;
 
     @Override
@@ -46,7 +48,13 @@ public class SlideShow extends Activity {
 
         circleIndicator.setViewPager(viewPager);
         imageAdapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
-        
+
+        intentCallMusicService = new Intent(
+                this, MusicService.class
+        );
+
+        startService(intentCallMusicService);
+
         autoSlideImages();
     }
 
@@ -76,21 +84,21 @@ public class SlideShow extends Activity {
         }
     }
 
-    private List<ss_ImageData> getImageList() {
-        try
-        {
-            SlideShowData.clearList();
-        }
-        catch (Exception e)
-        {
-            SlideShowData.list = new ArrayList<ss_ImageData>();
-        }
+    private List<Photos> getImageList() {
+//        try
+//        {
+//            SlideShowData.clearList();
+//        }
+//        catch (Exception e)
+//        {
+//            SlideShowData.list = new ArrayList<Photos>();
+//        }
 
-        SlideShowData.list.add(new ss_ImageData("new path", R.drawable.avatar01));
-        SlideShowData.list.add(new ss_ImageData("new path", R.drawable.avatar02));
-        SlideShowData.list.add(new ss_ImageData("new path", R.drawable.avatar03));
-        SlideShowData.list.add(new ss_ImageData("new path", R.drawable.avatar04));
-        SlideShowData.list.add(new ss_ImageData("new path", R.drawable.avatar05));
+//        SlideShowData.list.add(new ss_ImageData("new path", R.drawable.avatar01));
+//        SlideShowData.list.add(new ss_ImageData("new path", R.drawable.avatar02));
+//        SlideShowData.list.add(new ss_ImageData("new path", R.drawable.avatar03));
+//        SlideShowData.list.add(new ss_ImageData("new path", R.drawable.avatar04));
+//        SlideShowData.list.add(new ss_ImageData("new path", R.drawable.avatar05));
         return SlideShowData.list;
     }
 

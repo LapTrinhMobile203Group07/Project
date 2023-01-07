@@ -96,6 +96,7 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
             @Override
             public void onClick(View view) {
                 // Do something
+                SlideShowData.list = arrayList;
                 Intent intent = new Intent(main.context, SlideShow.class);
                 startActivity(intent);
             }
