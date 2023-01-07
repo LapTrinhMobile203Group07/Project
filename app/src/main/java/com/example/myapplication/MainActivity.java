@@ -26,6 +26,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -69,9 +71,11 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
 
     //Đức Anh
     Context context = this;
-    FloatingActionButton btnCamera;
+    FloatingActionButton btnFloat, btnCamera, btnSlideshow;
     Uri cam_uri;
 
+    Animation rotateOpen, rotateClose, show, hide;
+    private boolean isClicked = false;
 
 
 
@@ -105,8 +109,49 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
         }
 
 
-        //Camera button
+        //Float button
+        btnFloat = (FloatingActionButton) findViewById(R.id.btnFloat);
         btnCamera = (FloatingActionButton) findViewById(R.id.btnCamera);
+        btnSlideshow = (FloatingActionButton) findViewById(R.id.btnSlideshow);
+
+        // Animation
+        rotateOpen = AnimationUtils.loadAnimation(this, R.anim.rotate_open_animation);
+        rotateClose = AnimationUtils.loadAnimation(this, R.anim.rotate_close_animation);
+        show = AnimationUtils.loadAnimation(this, R.anim.show_animation);
+        hide = AnimationUtils.loadAnimation(this, R.anim.hide_animation);
+
+        btnFloat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isClicked = !isClicked;
+
+                //Visibility & Animation
+
+                if (isClicked){
+                    btnCamera.setClickable(true);
+                    btnCamera.setVisibility(View.VISIBLE);
+
+                    btnSlideshow.setClickable(true);
+                    btnSlideshow.setVisibility(View.VISIBLE);
+
+                    btnFloat.startAnimation(rotateOpen);
+                    btnCamera.startAnimation(show);
+                    btnSlideshow.startAnimation(show);
+                } else {
+                    btnCamera.setClickable(false);
+                    btnCamera.setVisibility(View.INVISIBLE);
+
+                    btnSlideshow.setClickable(false);
+                    btnSlideshow.setVisibility(View.INVISIBLE);
+
+                    btnFloat.startAnimation(rotateClose);
+                    btnCamera.startAnimation(hide);
+                    btnSlideshow.startAnimation(hide);
+                }
+
+            }
+        });
+
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,6 +161,13 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     openCamera();
                 }
+            }
+        });
+
+        btnSlideshow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: add slideshow
             }
         });
     }
