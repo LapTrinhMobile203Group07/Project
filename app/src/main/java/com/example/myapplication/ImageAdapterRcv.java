@@ -48,7 +48,7 @@ public class ImageAdapterRcv extends RecyclerView.Adapter<ImageAdapterRcv.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.photo, parent, false));
+        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.photo_search_adapter, parent, false));
     }
 
     @Override
@@ -77,9 +77,6 @@ public class ImageAdapterRcv extends RecyclerView.Adapter<ImageAdapterRcv.MyView
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e("ClickFromViewHolder", "Clicked");
-                    Log.e("ClickFromViewHolder", getLayoutPosition()+"000");
-                    Log.e("ClickFromViewHolder", photos.get(getLayoutPosition())+"000");
                     Intent intent = new Intent (mContext, PhotoActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("position", -1);

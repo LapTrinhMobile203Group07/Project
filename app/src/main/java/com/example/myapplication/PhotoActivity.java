@@ -381,12 +381,7 @@ public class PhotoActivity extends Activity {
             int dataColumn = cur.getColumnIndex(
                     MediaStore.Images.Media.DATA);
             do {
-                // Get the field values
                 dataImage = cur.getString(dataColumn);
-                // Do something with the values.
-                Log.e("ListingImages", " Data path Image=" + dataImage);
-//                arrayList.add(new Photos(dataImage));
-                Log.e("Images", " Data Image=" + new Photos(dataImage));
                 arrayList.add(new Photos(dataImage));
 
             } while (cur.moveToNext());

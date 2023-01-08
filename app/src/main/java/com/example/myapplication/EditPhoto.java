@@ -1,28 +1,18 @@
 package com.example.myapplication;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,8 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -94,7 +83,7 @@ public class EditPhoto extends FragmentActivity implements EditCallBacks
             @Override
             public void onClick(View view)
             {
-                editImageView.scaleBitmapResource(resourcei);
+                //editImageView.scaleBitmapResource();
                 saveImage(editImageView.getEditBitmap());
                 finish();
             }
@@ -107,8 +96,10 @@ public class EditPhoto extends FragmentActivity implements EditCallBacks
         toolItemList = new ArrayList<Tool>();
 
         toolItemList.add(new Tool(R.drawable.ic_baseline_photo_filter_24, "Filter"));
+        toolItemList.add(new Tool(R.drawable.ic_baseline_filter_none_24, "Blur"));
+        toolItemList.add(new Tool(R.drawable.ic_baseline_flip_24, "Flip"));
+        toolItemList.add(new Tool(R.drawable.ic_baseline_transform_24, "Resize"));
         toolItemList.add(new Tool(R.drawable.ic_baseline_brush_24, "Brush"));
-
         adapter = new ToolAdapter(toolItemList, EditPhoto.this, editImageView);
         toolsRecView.setAdapter(adapter);
         toolsRecView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -132,7 +123,7 @@ public class EditPhoto extends FragmentActivity implements EditCallBacks
             output.close();
             Toast.makeText(this, "Saved to " + pathFile, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Log.e("Error to save image in edit ", e.getMessage());
+            //Log.e("Error to save image in edit ", e.getMessage());
         }
     }
 
@@ -146,7 +137,6 @@ public class EditPhoto extends FragmentActivity implements EditCallBacks
     @Override
     public void onMsgFromFragToEdit(String sender, String request, Bitmap bitmap) {
         if (request.equals("CLEAR")) {
-
             if (sender.equals("FILTER")) {
                 editImageView.clearFilter();
             }

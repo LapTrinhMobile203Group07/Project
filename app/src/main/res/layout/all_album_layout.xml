@@ -13,19 +13,14 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
-        android:src="@drawable/ic_round_add_24"
         android:layout_gravity="right|bottom"
         app:fabSize="auto"
-        android:layout_below="@+id/albumsRecView"
-
-        />
+        android:layout_below="@+id/albumsRecView" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/albumsRecView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"/>
-
-
 
 
 

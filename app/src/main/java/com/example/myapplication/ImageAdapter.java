@@ -11,7 +11,6 @@ import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.github.chrisbanes.photoview.PhotoView;
-import com.jsibbold.zoomage.ZoomageView;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -75,6 +75,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity android:requestLegacyExternalStorage="true"
+            android:name=".SlideShow"
+            android:exported="false" />
         <activity
             android:requestLegacyExternalStorage="true"
             android:name=".PhotoActivity"
