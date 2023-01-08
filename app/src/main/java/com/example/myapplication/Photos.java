@@ -1,7 +1,5 @@
 package com.example.myapplication;
 
-import android.net.Uri;
-
 import java.io.Serializable;
 
 public class Photos implements Serializable {

@@ -46,7 +46,6 @@ public class SearchLayout extends Fragment implements FragmentCallbacks {
         SearchLayout fragment = new SearchLayout();
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +62,6 @@ public class SearchLayout extends Fragment implements FragmentCallbacks {
         super.onResume();
         GetAllPhotos();
         filter();
-        Log.e("onResume: ", "11111111111111111111111");
     }
 
     @Override
@@ -76,17 +74,6 @@ public class SearchLayout extends Fragment implements FragmentCallbacks {
         recyclerView.setLayoutManager(gridLayoutManager);
         imageAdapterRcv = new ImageAdapterRcv(main.getApplicationContext(),filterList);
         recyclerView.setAdapter(imageAdapterRcv);
-
-//        recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> container, View v, int position, long id) {
-//                Intent intent = new Intent (getContext(), PhotoActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("position", position);
-//                intent.putExtras(bundle);
-//                activityLauncher.launch(intent);
-//            }
-//        });
 
         editText_search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -156,12 +143,9 @@ public class SearchLayout extends Fragment implements FragmentCallbacks {
             }
         }
         imageAdapterRcv.filterList(filterList);
-        //recyclerView.setAdapter(new ImageAdapterRcv(main.getApplicationContext(),arrayList));
-        Log.e("afterTextChanged: ", " "+arrayList.size() );
     }
 
     public double ConvertStringToLat(String str){ //ex: "12/1,10/1,20012/2012" => 12.16943
-        Log.e("ConvertStringToLat: ", str+ " 123");
         if(str == null) return 0;
         String[] split1 = str.split(",");
         double result = 0;
@@ -195,14 +179,8 @@ public class SearchLayout extends Fragment implements FragmentCallbacks {
             int dataColumn = cur.getColumnIndex(
                     MediaStore.Images.Media.DATA);
             do {
-                // Get the field values
                 dataImage = cur.getString(dataColumn);
-                // Do something with the values.
-                Log.e("ListingImages", " Data path Image=" + dataImage);
-//                arrayList.add(new Photos(dataImage));
-                Log.e("Images", " Data Image=" + new Photos(dataImage));
                 arrayList.add(new Photos(dataImage));
-                Log.e("ListingImages", " Data path Image=" + "111111111111");
             } while (cur.moveToNext());
         }
     }

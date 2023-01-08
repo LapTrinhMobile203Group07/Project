@@ -51,6 +51,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 
@@ -65,18 +66,27 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
     AllAlbumLayout allAlbumLayout;
     private ActivityResultCallback<Boolean> result;
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result);
-    SpecificAlbumLayout specificAlbumLayout;
-    //Tài
-    GridView gridPhoto;
 
     //Đức Anh
     Context context = this;
     FloatingActionButton btnFloat, btnCamera, btnSlideshow;
-    Uri cam_uri;
-
     Animation rotateOpen, rotateClose, show, hide;
     private boolean isClicked = false;
+    Uri cam_uri;
 
+    ActivityResultLauncher<Intent> startActivityIntent = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    // Add same code that you want to add in onActivityResult method
+                    //Log.e("onActivityResult: ", (result.getData().getParcelableExtra("data")).getClass().getName()+"");
+                    Bitmap bitmap = result.getData().getParcelableExtra("data");
+                    if(bitmap != null){
+                        saveImage(bitmap);
+                    }
+                }
+            });
 
 
 
@@ -96,7 +106,6 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
         ft.replace(R.id.footFrag_holder, footerLayout);
         ft.commit();
 
-
         // Permission
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             //activityResultLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -109,7 +118,7 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
         }
 
 
-        //Float button
+        //Camera button
         btnFloat = (FloatingActionButton) findViewById(R.id.btnFloat);
         btnCamera = (FloatingActionButton) findViewById(R.id.btnCamera);
         btnSlideshow = (FloatingActionButton) findViewById(R.id.btnSlideshow);
@@ -163,55 +172,34 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
                 }
             }
         });
-
         btnSlideshow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: add slideshow
+                allPhotosLayout.onMsgFromMainToFragment("SlideShow");
             }
         });
     }
 
-
-    // Yêu cầu: Mở activity camera đồng thời trả về ảnh chụp được từ người dùng
-    // Khó khăn: API mới cập nhật, ko thể sử dụng putExtra và ko thể sử dụng startActivityForResult
-    //           Đồng thời cũng có quá ít hướng dẫn và kiến thức để làm
     private void openCamera(){
         Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        // Tạo path, file cho ảnh được chụp từ camera
-        File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/Camera");
-        if(!directory.exists()){
-            directory.mkdirs();
-        }
-
-        String fileName = "IMG" + System.currentTimeMillis() + ".jpg";
-        File file = new File(directory, fileName);
-        cam_uri = Uri.fromFile(file); // Có thể có vấn đề
-
-        // Lý thuyết cũ, dùng putExtra và startActivityForResult để lưu ảnh, nhưng đã ngừng hỗ trợ
-        //camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, cam_uri);
-
-        // Phải dùng hàm phía dưới nhưng hiện tại ko thể nên thay thế bằng hàm này
-        startActivity(camera_intent);
-
-        // Chắc chắn có vấn đề
-        /*
-        ActivityResultLauncher<Intent> takeCamera = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        //Intent data = result.getData();
-                        //Bitmap photo = (Bitmap) data.getExtras().get("data");
-                    }
-                }
-        );
-        takeCamera.launch(camera_intent);
-        */
+        startActivityIntent.launch(camera_intent);
     }
 
-
+    private void saveImage(Bitmap bitmap) {
+        String pathFile = "/storage/emulated/0/Pictures/";
+        File pictureFile = new File(pathFile, bitmap.toString() + ".jpg");
+        FileOutputStream output = null;
+        try {
+            output = new FileOutputStream(pictureFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+            output.flush();
+            output.close();
+            Toast.makeText(this, "Saved to " + pathFile, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e("Error to save image in edit ", e.getMessage());
+        }
+    }
 
     // MainCallback implementation (receiving messages coming from Fragments)
     @Override
@@ -221,18 +209,19 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
                 ft = getSupportFragmentManager().beginTransaction();
                 allPhotosLayout = AllPhotosLayout.newInstance();
                 ft.replace(R.id.mainFrag_holder, allPhotosLayout);
-
-
                 ft.commit();
+                btnFloat.setVisibility(View.VISIBLE);
             }
 
             else if (btn.equals("Home_Layout")){
+                setInvisibleBtnFloat();
                 ft = getSupportFragmentManager().beginTransaction();
                 homeLayout = HomeLayout.newInstance();
                 ft.replace(R.id.mainFrag_holder, homeLayout);
                 ft.commit();
             }
             else if (btn.equals("Search_Layout")){
+                setInvisibleBtnFloat();
                 ft = getSupportFragmentManager().beginTransaction();
                 searchLayout = SearchLayout.newInstance();
                 ft.replace(R.id.mainFrag_holder, searchLayout);
@@ -246,6 +235,22 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
                 ft.replace(R.id.mainFrag_holder, allAlbumLayout);
                 ft.commit();
             }
+        }
+    }
+
+    public void setInvisibleBtnFloat(){
+        btnCamera.clearAnimation();
+        btnSlideshow.clearAnimation();
+        btnFloat.clearAnimation();
+        btnCamera.setClickable(false);
+        btnCamera.setVisibility(View.INVISIBLE);
+
+        btnSlideshow.setClickable(false);
+        btnSlideshow.setVisibility(View.INVISIBLE);
+
+        btnFloat.setVisibility(View.INVISIBLE);
+        if(isClicked == true){
+            isClicked = false;
         }
     }
 
@@ -281,8 +286,5 @@ public class MainActivity extends FragmentActivity implements MainCallbacks {
         }
         return false;
     }
-
-
-
 
 }

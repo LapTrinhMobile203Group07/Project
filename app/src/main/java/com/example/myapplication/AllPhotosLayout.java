@@ -16,7 +16,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.transition.Slide;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,10 +94,7 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Do something
-                SlideShowData.list = arrayList;
-                Intent intent = new Intent(main.context, SlideShow.class);
-                startActivity(intent);
+
             }
         });
 
@@ -107,10 +103,8 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
 
     @Override
     public void onResume() {
-
         super.onResume();
         getImages();
-
     }
 
     private void assignViewByFindId(LinearLayout layout) {
@@ -120,7 +114,11 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
 
     @Override
     public void onMsgFromMainToFragment(String btn) {
-
+        if(btn == "SlideShow"){
+            SlideShowData.list = arrayList;
+            Intent intent = new Intent(main.context, SlideShow.class);
+            startActivity(intent);
+        }
     }
     //Get Path Image and Video
     private void getImages() {
@@ -148,26 +146,6 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
                 null        // Ordering
         );
 
-        Log.i("ListingImages", " query count=" + cur);
-        //Video
-        if (cur1.moveToFirst()) {
-            String dataImage;
-            String dataVideo;
-//            int dataColumn = cur.getColumnIndex(
-//                    MediaStore.Images.Media.DATA);
-            int videoColumn = cur1.getColumnIndex(
-                    MediaStore.Video.Media.DATA);
-            do {
-                // Get the field values
-//                dataImage = cur.getString(dataColumn);
-                dataVideo = cur1.getString(videoColumn);
-                // Do something with the values.
-//                Log.i("ListingImages", " Data=" + dataImage);
-                Log.i("ListingImages", " Data=" + dataVideo);
-                arrayList.add(new Photos(dataVideo));
-            } while (cur1.moveToNext());
-
-        }
         //Images
         if (cur.moveToFirst()) {
             Log.i("ListingImages", " query count=" + cur);
@@ -180,10 +158,6 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
             do {
                 // Get the field values
                 dataImage = cur.getString(dataColumn);
-                // Do something with the values.
-                Log.e("ListingImages", " Data path Image=" + dataImage);
-//                arrayList.add(new Photos(dataImage));
-                Log.e("Images", " Data Image=" + new Photos(dataImage));
                 arrayList.add(new Photos(dataImage));
 //                Log.i("ListingImages", " Data=" + dataVideo);
             } while (cur.moveToNext());

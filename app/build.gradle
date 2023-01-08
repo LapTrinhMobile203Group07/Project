@@ -55,8 +55,5 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     // For control over item selection of both touch and mouse driven selection
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
-
-    // For SlideShow
-    implementation 'com.github.smarteist:autoimageslider:1.4.0-appcompat'
     implementation 'me.relex:circleindicator:2.1.6'
 }

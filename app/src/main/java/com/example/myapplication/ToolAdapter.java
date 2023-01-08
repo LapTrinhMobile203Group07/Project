@@ -18,7 +18,7 @@ public class ToolAdapter extends RecyclerView.Adapter<ToolAdapter.ViewHolder> {
 
     private List<Tool> toolItemList;
     private Context context;
-    private EditImageView editImageView;
+    private EditImageView editImageView, tempeIV;
     private EditPhoto activity;
 
     public ToolAdapter(List<Tool> toolItemList, Context context, EditImageView editImageView) {
@@ -48,10 +48,24 @@ public class ToolAdapter extends RecyclerView.Adapter<ToolAdapter.ViewHolder> {
                 if (toolItemList.get(holder.getAdapterPosition()).getName().equals("Filter")) {
                     activity.inflateFragment(FilterFragment.getInstance(context, editImageView, editImageView.getBitmapResource()));
                 }
-                //if (toolItemList.get(holder.getAdapterPosition()).getName().equals("Brush")) {
-                    //editImageView.setIsBrush(true);
-                    //activity.inflateFragment(BrushFragment.getInstance(context, editImageView));
-                //}
+
+                if (toolItemList.get(holder.getAdapterPosition()).getName().equals("Brush")) {
+                    tempeIV=editImageView;
+                    editImageView.setIsBrush(true);
+                    activity.inflateFragment(BrushFragment.getInstance(context, editImageView));
+                }
+
+                if (toolItemList.get(holder.getAdapterPosition()).getName().equals("Flip")) {
+                    activity.inflateFragment(FlipFragment.getInstance(context, editImageView));
+                }
+
+                if (toolItemList.get(holder.getAdapterPosition()).getName().equals("Resize")) {
+                    activity.inflateFragment(ResizeFragment.getInstance(context, editImageView));
+                }
+
+                if (toolItemList.get(holder.getAdapterPosition()).getName().equals("Blur")) {
+                    activity.inflateFragment(BlurFragment.getInstance(context, editImageView));
+                }
             }
         });
     }

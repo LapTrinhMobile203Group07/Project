@@ -54,11 +54,8 @@
         android:verticalSpacing="1dp"
         android:layout_centerHorizontal="true"
         android:scrollbarAlwaysDrawHorizontalTrack="true"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        >
-
+        android:scrollbarAlwaysDrawVerticalTrack="true">
     </GridView>
-
 
 
 </LinearLayout>
