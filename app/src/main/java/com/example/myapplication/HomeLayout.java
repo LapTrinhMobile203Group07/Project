@@ -1,8 +1,10 @@
 package com.example.myapplication;
 
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -80,7 +82,8 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
         btnGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Opendialog();
+//                Opendialog();
+                openCreateAlbumActivity();
             }
         });
 
@@ -98,6 +101,17 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
         MyAsyncTask myAsyncTask = new MyAsyncTask();
         myAsyncTask.execute();
     }//Onstart
+    private void openCreateAlbumActivity() {
+//        Intent _intent = new Intent(view.getContext(), CreateAlbumActivity.class);
+//        _intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        ((Activity) view.getContext()).startActivityForResult(_intent, 100);
+
+
+        Intent intent = new Intent ( context, CreateAlbumActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+
+    }
 
     public class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
         @Override

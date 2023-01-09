@@ -39,10 +39,28 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:requestLegacyExternalStorage="true"
+            android:name=".ItemAlbumActivity"
+            android:exported="false">
+            <meta-data
+                android:requestLegacyExternalStorage="true"
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
 
         <activity
             android:requestLegacyExternalStorage="true"
             android:name=".SpecificAlbumLayout"
+            android:exported="false">
+            <meta-data
+                android:requestLegacyExternalStorage="true"
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:requestLegacyExternalStorage="true"
+            android:name=".CreateAlbumActivity"
             android:exported="false">
             <meta-data
                 android:requestLegacyExternalStorage="true"

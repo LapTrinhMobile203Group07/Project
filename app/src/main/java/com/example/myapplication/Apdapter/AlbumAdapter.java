@@ -1,6 +1,9 @@
 package com.example.myapplication.Apdapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,15 +11,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.example.myapplication.*;
 import com.bumptech.glide.Glide;
-import com.example.myapplication.Album;
-import com.example.myapplication.R;
+//import com.example.testgallery.activities.mainActivities.ItemAlbumActivity;
+//import com.example.testgallery.R;
+//import com.example.testgallery.activities.mainActivities.SlideShowActivity;
+//import com.example.testgallery.models.Album;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder> {
@@ -27,10 +35,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
     public AlbumAdapter(List<Album> mListAlbums, Context context) {
         this.mListAlbums = mListAlbums;
         this.context = context;
-        Log.e("note" , "=============================================");
-        Log.e("note" , "Albums Apdapter (2)");
-
     }
+
 
     public void setData(List<Album> mListAlbums) {
         this.mListAlbums = mListAlbums;
@@ -41,13 +47,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
     }
     @NonNull
     @Override
-    public AlbumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AlbumAdapter.AlbumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_album, parent, false);
-        return new AlbumViewHolder(view);
+        return new AlbumAdapter.AlbumViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AlbumViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AlbumAdapter.AlbumViewHolder holder, int position) {
         holder.onBind(mListAlbums.get(position), position);
     }
 
@@ -77,8 +83,30 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
 
         public void onBind(Album ref, int pos) {
             bindData(ref);
-        }
 
+            img_album.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), ItemAlbumActivity.class);
+                    ArrayList<String> list = new ArrayList<>();
+                    for(int i=0;i<ref.getList().size();i++) {
+                        list.add(ref.getList().get(i).getThumb());
+                    }
+                    Log.d("Alo",ref.getPathFolder());
+
+                    intent.putStringArrayListExtra("data", list);
+                    intent.putExtra("path_folder", ref.getPathFolder());
+                    intent.putExtra("name", ref.getName());
+                    intent.putExtra("ok", 1);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    ((Activity)context).startActivityForResult(intent,10);
+                }
+            });
+
+
+
+
+        }
 
         private void bindData(Album ref) {
             txtName_album.setText(ref.getName());
@@ -86,5 +114,40 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
             Glide.with(context).load(ref.getImg().getThumb()).into(img_album);
         }
 
+//        private void slideShowEvents(@NonNull Album ref) {
+//            Intent intent = new Intent(context, SlideShowActivity.class);
+//            ArrayList<String> list = new ArrayList<>();
+//            for(int i=0;i<ref.getList().size();i++) {
+//                list.add(ref.getList().get(i).getThumb());
+//            }
+//            intent.putStringArrayListExtra("data_slide", list);
+//            intent.putExtra("name", ref.getName());
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            bottomSheetDialog.cancel();
+//            context.startActivity(intent);
+//        }
+        private void deleteEvents(Album ref, int pos) {
+            for(int i=0;i<ref.getList().size();i++) {
+                Uri targetUri = Uri.parse("file://" + ref.getList().get(i).getPath());
+                File file = new File(targetUri.getPath());
+                if (file.exists()){
+                    file.delete();
+                }
+            }
+            mListAlbums.remove(pos);
+            notifyDataSetChanged();
+            bottomSheetDialog.cancel();
+        }
+        private void openBottomDialog() {
+//            View viewDialog = LayoutInflater.from(context).inflate(R.layout.layout_bottom_sheet_album, null);
+//            layout_bottom_delete = viewDialog.findViewById(R.id.layout_bottom_delete);
+//            layout_bottom_slide_show = viewDialog.findViewById(R.id.layout_bottom_slide_show);
+//            txtPath = viewDialog.findViewById(R.id.txtPath);
+
+
+//            bottomSheetDialog = new BottomSheetDialog(context);
+//            bottomSheetDialog.setContentView(viewDialog);
+//            bottomSheetDialog.show();
+        }
     }
 }
