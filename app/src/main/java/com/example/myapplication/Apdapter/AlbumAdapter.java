@@ -102,6 +102,36 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
                     ((Activity)context).startActivityForResult(intent,10);
                 }
             });
+            img_album.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    openBottomDialog();
+
+                    txtPath.setText(ref.getPathFolder());
+                    txtPath.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(context, ref.getPathFolder(), Toast.LENGTH_SHORT).show();
+                            bottomSheetDialog.cancel();
+                        }
+                    });
+
+//                    layout_bottom_slide_show.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            slideShowEvents(ref);
+//                        }
+//                    });
+                    layout_bottom_delete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            deleteEvents(ref, pos);
+                        }
+                    });
+                    return true;
+                }
+            });
+
 
 
 
@@ -139,15 +169,15 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
             bottomSheetDialog.cancel();
         }
         private void openBottomDialog() {
-//            View viewDialog = LayoutInflater.from(context).inflate(R.layout.layout_bottom_sheet_album, null);
-//            layout_bottom_delete = viewDialog.findViewById(R.id.layout_bottom_delete);
+            View viewDialog = LayoutInflater.from(context).inflate(R.layout.layout_bottom_sheet_album, null);
+            layout_bottom_delete = viewDialog.findViewById(R.id.layout_bottom_delete);
 //            layout_bottom_slide_show = viewDialog.findViewById(R.id.layout_bottom_slide_show);
-//            txtPath = viewDialog.findViewById(R.id.txtPath);
+            txtPath = viewDialog.findViewById(R.id.txtPath);
 
 
-//            bottomSheetDialog = new BottomSheetDialog(context);
-//            bottomSheetDialog.setContentView(viewDialog);
-//            bottomSheetDialog.show();
+            bottomSheetDialog = new BottomSheetDialog(context);
+            bottomSheetDialog.setContentView(viewDialog);
+            bottomSheetDialog.show();
         }
     }
 }
