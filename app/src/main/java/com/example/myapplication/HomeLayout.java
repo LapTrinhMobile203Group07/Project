@@ -87,12 +87,12 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
             }
         });
 
-        btnSeeAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                main.onMsgFromFragToMain("Home_Layout", "All_Album_Layout");
-            }
-        });
+//        btnSeeAll.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                main.onMsgFromFragToMain("Home_Layout", "All_Album_Layout");
+//            }
+//        });
         return home_layout;
     }// Oncreat
     @Override
@@ -167,7 +167,7 @@ public class HomeLayout extends Fragment implements FragmentCallbacks {
 
     private void assignViewByFindId_HomeLayout(LinearLayout layout){
         btnGo = (Button) layout.findViewById(R.id.btnGo);
-        btnSeeAll = (Button) layout.findViewById(R.id.btnSeeAll);
+//        btnSeeAll = (Button) layout.findViewById(R.id.btnSeeAll);
         //Tai
         ryc_album = layout.findViewById(R.id.ryc_album);
         //
