@@ -67,6 +67,15 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:requestLegacyExternalStorage="true"
+            android:name=".MultiSelectImage"
+            android:exported="false">
+            <meta-data
+                android:requestLegacyExternalStorage="true"
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
 
         <activity
             android:requestLegacyExternalStorage="true"

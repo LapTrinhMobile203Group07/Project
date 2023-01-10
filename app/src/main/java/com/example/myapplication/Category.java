@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Category {
     private String nameCategory;
-    private List<Image> listImage;
+    private List<MyImage> listImage;
 
     public String getNameCategory() {
         return nameCategory;
@@ -14,22 +14,22 @@ public class Category {
         this.nameCategory = nameCategory;
     }
 
-    public List<Image> getListGirl() {
+    public List<MyImage> getListGirl() {
         return listImage;
     }
 
-    public void setListGirl(List<Image> listImage) {
+    public void setListGirl(List<MyImage> listImage) {
         this.listImage = listImage;
     }
 
-    public void addListGirl(Image img){this.listImage.add(img);}
+    public void addListGirl(MyImage img){this.listImage.add(img);}
 
-    public Category(String nameCategory, List<Image> listImage) {
+    public Category(String nameCategory, List<MyImage> listImage) {
         this.nameCategory = nameCategory;
         this.listImage = listImage;
     }
 
-    public Category(List<Image> listImage) {
+    public Category(List<MyImage> listImage) {
         this.listImage = listImage;
     }
 }

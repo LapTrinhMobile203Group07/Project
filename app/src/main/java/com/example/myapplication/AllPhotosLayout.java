@@ -94,6 +94,10 @@ public class AllPhotosLayout extends Fragment implements FragmentCallbacks {
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent (view.getContext(), MultiSelectImage.class);
+
+                activityLauncher.launch(intent);
+
 
             }
         });

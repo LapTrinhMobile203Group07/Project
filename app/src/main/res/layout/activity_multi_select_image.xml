@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MultiSelectImage">
-<!--    <include-->
-<!--        android:id="@+id/toolbar_item_album"-->
-<!--        layout="@layout/layout_toolbar" />-->
+    <include
+        android:id="@+id/toolbar_item_album"
+        layout="@layout/layout_toolbar" />
 
     <FrameLayout
         android:id="@+id/container"
